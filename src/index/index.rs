@@ -23,7 +23,7 @@ use crate::indexer::{IndexWriter, SingleSegmentIndexWriter};
 use crate::reader::{IndexReader, IndexReaderBuilder};
 use crate::schema::document::Document;
 use crate::schema::{Field, FieldType, Schema};
-use crate::tokenizer::{TextAnalyzer, TokenizerManager};
+use crate::tokenizer::{PathAnalyzerManager, TextAnalyzer, TokenizerManager};
 use crate::SegmentReader;
 
 fn load_metas(
@@ -271,6 +271,7 @@ pub struct Index {
     executor: Executor,
     tokenizers: TokenizerManager,
     fast_field_tokenizers: TokenizerManager,
+    path_analyzers: PathAnalyzerManager,
     inventory: SegmentMetaInventory,
 }
 
@@ -389,6 +390,7 @@ impl Index {
             schema,
             tokenizers: TokenizerManager::default(),
             fast_field_tokenizers: TokenizerManager::default(),
+            path_analyzers: PathAnalyzerManager::default(),
             executor: Executor::single_thread(),
             inventory,
         }
@@ -402,6 +404,20 @@ impl Index {
     /// Accessor for the tokenizer manager.
     pub fn tokenizers(&self) -> &TokenizerManager {
         &self.tokenizers
+    }
+
+    /// Setter for the analyzers chosen per JSON path.
+    ///
+    /// A JSON field's own tokenizer answers for every path it holds; this
+    /// says what a single path is cut with instead. The manager is shared,
+    /// so a path set after this call is still seen by the next writer.
+    pub fn set_path_analyzers(&mut self, path_analyzers: PathAnalyzerManager) {
+        self.path_analyzers = path_analyzers;
+    }
+
+    /// Accessor for the analyzers chosen per JSON path.
+    pub fn path_analyzers(&self) -> &PathAnalyzerManager {
+        &self.path_analyzers
     }
 
     /// Setter for the fast field tokenizer manager.

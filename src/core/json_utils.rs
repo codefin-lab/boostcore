@@ -2,6 +2,7 @@ use columnar::NumericalValue;
 use common::json_path_writer::{JSON_END_OF_PATH, JSON_PATH_SEGMENT_SEP};
 use common::{replace_in_place, JsonPathWriter};
 use rustc_hash::FxHashMap;
+use std::collections::HashMap;
 
 use crate::indexer::indexing_term::IndexingTerm;
 use crate::postings::{IndexingContext, IndexingPosition, PostingsWriter};
@@ -92,7 +93,7 @@ pub fn json_path_sep_to_dot(path: &mut str) {
 fn index_json_object<'a, V: Value<'a>>(
     doc: DocId,
     json_visitor: V::ObjectIter,
-    text_analyzer: &mut TextAnalyzer,
+    text_analyzer: &mut JsonPathAnalyzers,
     term_buffer: &mut IndexingTerm,
     json_path_writer: &mut JsonPathWriter,
     postings_writer: &mut dyn PostingsWriter,
@@ -118,11 +119,52 @@ fn index_json_object<'a, V: Value<'a>>(
     }
 }
 
+/// The analyzers one JSON field indexes with.
+///
+/// A field names a tokenizer, and that answers for every path it holds. A
+/// path may name a different one -- a Japanese body beside an English title,
+/// an identifier that is not cut at all -- and this is where the writer keeps
+/// them, resolved once when it is created rather than looked up per token.
+pub(crate) struct JsonPathAnalyzers {
+    fallback: TextAnalyzer,
+    by_path: HashMap<String, TextAnalyzer>,
+}
+
+impl JsonPathAnalyzers {
+    /// A field with no path of its own named.
+    pub(crate) fn new(fallback: TextAnalyzer) -> Self {
+        JsonPathAnalyzers {
+            fallback,
+            by_path: HashMap::new(),
+        }
+    }
+
+    /// Cut this path with `analyzer` rather than the field's own.
+    pub(crate) fn set(&mut self, path: String, analyzer: TextAnalyzer) {
+        self.by_path.insert(path, analyzer);
+    }
+
+    /// The analyzer a text under `path` is cut with.
+    #[inline]
+    pub(crate) fn for_path(&mut self, path: &str) -> &mut TextAnalyzer {
+        if self.by_path.is_empty() || !self.by_path.contains_key(path) {
+            return &mut self.fallback;
+        }
+        self.by_path.get_mut(path).unwrap()
+    }
+
+    /// The field's own analyzer, for the fields that are not JSON.
+    #[inline]
+    pub(crate) fn fallback(&mut self) -> &mut TextAnalyzer {
+        &mut self.fallback
+    }
+}
+
 #[expect(clippy::too_many_arguments)]
 pub(crate) fn index_json_value<'a, V: Value<'a>>(
     doc: DocId,
     json_value: V,
-    text_analyzer: &mut TextAnalyzer,
+    text_analyzer: &mut JsonPathAnalyzers,
     term_buffer: &mut IndexingTerm,
     json_path_writer: &mut JsonPathWriter,
     postings_writer: &mut dyn PostingsWriter,
@@ -141,7 +183,9 @@ pub(crate) fn index_json_value<'a, V: Value<'a>>(
         ReferenceValue::Leaf(leaf) => match leaf {
             ReferenceValueLeaf::Null => {}
             ReferenceValueLeaf::Str(val) => {
-                let mut token_stream = text_analyzer.token_stream(val);
+                let mut token_stream = text_analyzer
+                    .for_path(json_path_writer.as_str())
+                    .token_stream(val);
                 let unordered_id = ctx
                     .path_to_unordered_id
                     .get_or_allocate_unordered_id(json_path_writer.as_str());

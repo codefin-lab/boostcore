@@ -4,6 +4,7 @@ use itertools::Itertools;
 use tokenizer_api::BoxTokenStream;
 
 use super::operation::AddOperation;
+use crate::core::json_utils::JsonPathAnalyzers;
 use crate::fastfield::FastFieldsWriter;
 use crate::fieldnorm::{FieldNormReaders, FieldNormsWriter};
 use crate::index::{Segment, SegmentComponent};
@@ -16,7 +17,7 @@ use crate::postings::{
 };
 use crate::schema::document::{Document, Value};
 use crate::schema::{FieldEntry, FieldType, Schema, DATE_TIME_PRECISION_INDEXED};
-use crate::tokenizer::{FacetTokenizer, PreTokenizedStream, TextAnalyzer, Tokenizer};
+use crate::tokenizer::{FacetTokenizer, PreTokenizedStream, Tokenizer};
 use crate::{DocId, Opstamp, TantivyError};
 
 /// Computes the initial size of the hash table.
@@ -55,7 +56,7 @@ pub struct SegmentWriter {
     pub(crate) json_path_writer: JsonPathWriter,
     pub(crate) json_positions_per_path: IndexingPositionsPerPath,
     pub(crate) doc_opstamps: Vec<Opstamp>,
-    per_field_text_analyzers: Vec<TextAnalyzer>,
+    per_field_text_analyzers: Vec<JsonPathAnalyzers>,
     term_buffer: IndexingTerm,
     schema: Schema,
 }
@@ -73,6 +74,7 @@ impl SegmentWriter {
     pub fn for_segment(memory_budget_in_bytes: usize, segment: Segment) -> crate::Result<Self> {
         let schema = segment.schema();
         let tokenizer_manager = segment.index().tokenizers().clone();
+        let path_analyzers = segment.index().path_analyzers().clone();
         let tokenizer_manager_fast_field = segment.index().fast_field_tokenizer().clone();
         let table_size = compute_initial_table_size(memory_budget_in_bytes)?;
         let segment_serializer = SegmentSerializer::for_segment(segment)?;
@@ -91,14 +93,26 @@ impl SegmentWriter {
                     .map(|text_index_option| text_index_option.tokenizer())
                     .unwrap_or("default");
 
-                tokenizer_manager.get(tokenizer_name).ok_or_else(|| {
-                    TantivyError::SchemaError(format!(
-                        "Error getting tokenizer for field: {}",
-                        field_entry.name()
-                    ))
-                })
+                let resolve = |name: &str| {
+                    tokenizer_manager.get(name).ok_or_else(|| {
+                        TantivyError::SchemaError(format!(
+                            "Error getting tokenizer for field: {}",
+                            field_entry.name()
+                        ))
+                    })
+                };
+                let mut analyzers = JsonPathAnalyzers::new(resolve(tokenizer_name)?);
+                // A path inside a JSON field may name its own analyzer. They
+                // are resolved here, once, so that indexing a document is
+                // still a lookup in a map this writer owns.
+                if matches!(field_entry.field_type(), FieldType::JsonObject(_)) {
+                    for (path, name) in path_analyzers.paths_of(field_entry.name()) {
+                        analyzers.set(path, resolve(&name)?);
+                    }
+                }
+                Ok(analyzers)
             })
-            .collect::<Result<Vec<_>, _>>()?;
+            .collect::<Result<Vec<_>, TantivyError>>()?;
         Ok(Self {
             max_doc: 0,
             ctx: IndexingContext::new(table_size),
@@ -198,7 +212,7 @@ impl SegmentWriter {
 
                         let mut token_stream = if let Some(text) = value.as_str() {
                             let text_analyzer =
-                                &mut self.per_field_text_analyzers[field.field_id() as usize];
+                                self.per_field_text_analyzers[field.field_id() as usize].fallback();
                             text_analyzer.token_stream(text)
                         } else if let Some(tok_str) = value.into_pre_tokenized_text() {
                             BoxTokenStream::new(PreTokenizedStream::from(*tok_str.clone()))
@@ -784,6 +798,43 @@ mod tests {
         postings.positions(&mut positions);
         assert_eq!(&positions[..], &[1, 2]);
         assert_eq!(postings.advance(), TERMINATED);
+    }
+
+    #[test]
+    fn a_path_may_name_its_own_analyzer() {
+        // The field is cut into words; one path inside it is left whole.
+        let mut schema_builder = Schema::builder();
+        let json_field = schema_builder.add_json_field("json", TEXT);
+        let schema = schema_builder.build();
+        let mut index = Index::create_in_ram(schema);
+        let path_analyzers = crate::tokenizer::PathAnalyzerManager::default();
+        path_analyzers.set("json", "id", "raw");
+        index.set_path_analyzers(path_analyzers);
+
+        let json_val: serde_json::Value =
+            serde_json::from_str(r#"{"title": "two tokens", "id": "two tokens"}"#).unwrap();
+        let mut writer = index.writer_for_tests().unwrap();
+        writer.add_document(doc!(json_field=>json_val)).unwrap();
+        writer.commit().unwrap();
+
+        let searcher = index.reader().unwrap().searcher();
+        let inv_index = searcher
+            .segment_reader(0u32)
+            .inverted_index(json_field)
+            .unwrap();
+
+        let mut whole = Term::from_field_json_path(json_field, "id", false);
+        whole.append_type_and_str("two tokens");
+        assert!(inv_index.get_term_info(&whole).unwrap().is_some());
+
+        let mut cut = Term::from_field_json_path(json_field, "id", false);
+        cut.append_type_and_str("two");
+        assert!(inv_index.get_term_info(&cut).unwrap().is_none());
+
+        // and the paths that named nothing are cut as they always were
+        let mut title = Term::from_field_json_path(json_field, "title", false);
+        title.append_type_and_str("two");
+        assert!(inv_index.get_term_info(&title).unwrap().is_some());
     }
 
     #[test]
