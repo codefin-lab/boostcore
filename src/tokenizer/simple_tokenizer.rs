@@ -28,6 +28,12 @@ fn part_of_word(c: char) -> bool {
     c.is_alphanumeric() || c == '_' || is_combining_mark(c)
 }
 
+/// The characters that stand between two letters of the same word.
+#[inline]
+fn joins_letters(c: char) -> bool {
+    matches!(c, '\'' | '\u{2019}' | '\u{00B7}' | '\u{05F4}' | '\u{FF07}')
+}
+
 /// The ranges of characters that are written onto another one.
 #[inline]
 fn is_combining_mark(c: char) -> bool {
@@ -85,11 +91,23 @@ impl Tokenizer for SimpleTokenizer {
 impl SimpleTokenStream<'_> {
     // search for the end of the current token.
     fn search_token_end(&mut self) -> usize {
-        (&mut self.chars)
-            .filter(|(_, c)| !part_of_word(*c))
-            .map(|(offset, _)| offset)
-            .next()
-            .unwrap_or(self.text.len())
+        loop {
+            let Some((offset, c)) = self.chars.next() else {
+                return self.text.len();
+            };
+            if part_of_word(c) {
+                continue;
+            }
+            // An apostrophe between two letters is inside the word rather than
+            // after it: `don't` is one word, and Unicode says so.
+            if joins_letters(c) {
+                let rest = &self.text[offset + c.len_utf8()..];
+                if rest.chars().next().map(part_of_word).unwrap_or(false) {
+                    continue;
+                }
+            }
+            return offset;
+        }
     }
 }
 
