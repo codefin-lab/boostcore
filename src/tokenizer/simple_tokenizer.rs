@@ -34,6 +34,12 @@ fn joins_letters(c: char) -> bool {
     matches!(c, '\'' | '\u{2019}' | '\u{00B7}' | '\u{05F4}' | '\u{FF07}')
 }
 
+/// The characters that stand between two digits of the same number.
+#[inline]
+fn joins_numbers(c: char) -> bool {
+    matches!(c, '.' | ',' | '\u{066B}' | '\u{066C}' | '\u{2019}')
+}
+
 /// The ranges of characters that are written onto another one.
 #[inline]
 fn is_combining_mark(c: char) -> bool {
@@ -99,12 +105,18 @@ impl SimpleTokenStream<'_> {
                 continue;
             }
             // An apostrophe between two letters is inside the word rather than
-            // after it: `don't` is one word, and Unicode says so.
-            if joins_letters(c) {
-                let rest = &self.text[offset + c.len_utf8()..];
-                if rest.chars().next().map(part_of_word).unwrap_or(false) {
-                    continue;
-                }
+            // after it: `don't` is one word, and Unicode says so. A dot or a
+            // comma between two digits is inside the number the same way:
+            // `3.14` is one.
+            let next = self.text[offset + c.len_utf8()..].chars().next();
+            if joins_letters(c) && next.map(part_of_word).unwrap_or(false) {
+                continue;
+            }
+            if joins_numbers(c)
+                && next.map(|n| n.is_numeric()).unwrap_or(false)
+                && self.text[..offset].chars().next_back().map(|p| p.is_numeric()).unwrap_or(false)
+            {
+                continue;
             }
             return offset;
         }
