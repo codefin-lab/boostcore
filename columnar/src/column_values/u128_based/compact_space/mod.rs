@@ -20,9 +20,9 @@ use std::{
 mod blank_range;
 mod build_compact_space;
 
+use boostcore_bitpacker::{BitPacker, BitUnpacker};
 use build_compact_space::get_compact_space;
 use common::{BinarySerializable, CountingWriter, OwnedBytes, VInt, VIntU128};
-use boostcore_bitpacker::{BitPacker, BitUnpacker};
 
 use crate::RowId;
 use crate::column_values::ColumnValues;

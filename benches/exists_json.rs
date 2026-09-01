@@ -1,10 +1,10 @@
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, InputGroup, PeakMemAlloc, INSTRUMENTED_SYSTEM};
-use serde_json::json;
 use boostcore::collector::Count;
 use boostcore::query::ExistsQuery;
 use boostcore::schema::{Schema, FAST, TEXT};
 use boostcore::{doc, Index};
+use serde_json::json;
 
 #[global_allocator]
 pub static GLOBAL: &PeakMemAlloc<std::alloc::System> = &INSTRUMENTED_SYSTEM;

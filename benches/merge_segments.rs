@@ -11,9 +11,6 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
 use binggan::{black_box, BenchRunner};
-use rand::prelude::*;
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use boostcore::directory::error::{DeleteError, OpenReadError, OpenWriteError};
 use boostcore::directory::{
     AntiCallToken, Directory, FileHandle, OwnedBytes, TerminatingWrite, WatchCallback, WatchHandle,
@@ -22,6 +19,9 @@ use boostcore::directory::{
 use boostcore::indexer::{merge_filtered_segments, NoMergePolicy};
 use boostcore::schema::{Schema, TEXT};
 use boostcore::{doc, HasLen, Index, IndexSettings, Segment};
+use rand::prelude::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 
 #[derive(Clone, Default, Debug)]
 struct NullDirectory {

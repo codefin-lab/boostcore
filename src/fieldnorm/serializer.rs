@@ -41,7 +41,11 @@ impl FieldNormsSerializer {
         field: Field,
         paths: &[(&str, &[u8])],
     ) -> io::Result<()> {
-        let num_docs = paths.iter().map(|(_, norms)| norms.len()).max().unwrap_or(0);
+        let num_docs = paths
+            .iter()
+            .map(|(_, norms)| norms.len())
+            .max()
+            .unwrap_or(0);
         let write = self.composite_write.for_field_with_idx(field, 1);
         write.write_all(&(paths.len() as u32).to_le_bytes())?;
         write.write_all(&(num_docs as u32).to_le_bytes())?;
@@ -57,6 +61,27 @@ impl FieldNormsSerializer {
             }
         }
         write.flush()?;
+
+        // and what each path holds across the whole segment, so that a score
+        // can be worked out against the path rather than against the field
+        // the path happens to sit in
+        let stats = self.composite_write.for_field_with_idx(field, 2);
+        stats.write_all(&(paths.len() as u32).to_le_bytes())?;
+        for (path, norms) in paths {
+            let mut docs = 0u64;
+            let mut tokens = 0u64;
+            for byte in norms.iter() {
+                if *byte != 0 {
+                    docs += 1;
+                    tokens += crate::fieldnorm::id_to_fieldnorm(*byte) as u64;
+                }
+            }
+            stats.write_all(&(path.len() as u32).to_le_bytes())?;
+            stats.write_all(path.as_bytes())?;
+            stats.write_all(&docs.to_le_bytes())?;
+            stats.write_all(&tokens.to_le_bytes())?;
+        }
+        stats.flush()?;
         Ok(())
     }
 

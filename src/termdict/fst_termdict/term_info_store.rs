@@ -1,9 +1,9 @@
 use std::cmp;
 use std::io::{self, Read, Write};
 
+use boostcore_bitpacker::{compute_num_bits, BitPacker};
 use byteorder::{ByteOrder, LittleEndian};
 use common::{BinarySerializable, FixedSize};
-use boostcore_bitpacker::{compute_num_bits, BitPacker};
 
 use crate::directory::{FileSlice, OwnedBytes};
 use crate::postings::TermInfo;
@@ -288,8 +288,8 @@ impl TermInfoStoreWriter {
 #[cfg(test)]
 mod tests {
 
-    use common::BinarySerializable;
     use boostcore_bitpacker::{compute_num_bits, BitPacker};
+    use common::BinarySerializable;
 
     use super::{extract_bits, TermInfoBlockMeta, TermInfoStore, TermInfoStoreWriter};
     use crate::directory::FileSlice;

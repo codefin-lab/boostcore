@@ -2,9 +2,9 @@ use std::io::Write;
 use std::sync::Arc;
 use std::{io, iter};
 
+use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 use common::{BinarySerializable, CountingWriter, DeserializeFrom, OwnedBytes};
 use fastdivide::DividerU64;
-use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 
 use crate::MonotonicallyMappableToU64;
 use crate::column_values::u64_based::line::Line;

@@ -1,6 +1,6 @@
 use binggan::{InputGroup, black_box};
-use common::*;
 use boostcore_columnar::Column;
+use common::*;
 
 pub mod common;
 

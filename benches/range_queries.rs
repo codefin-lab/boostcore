@@ -1,13 +1,13 @@
 use std::ops::Bound;
 
 use binggan::{black_box, BenchGroup, BenchRunner};
-use rand::prelude::*;
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use boostcore::collector::{Count, DocSetCollector, TopDocs};
 use boostcore::query::RangeQuery;
 use boostcore::schema::{Schema, FAST, INDEXED};
 use boostcore::{doc, Index, Order, ReloadPolicy, Searcher, Term};
+use rand::prelude::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 
 #[derive(Clone)]
 struct BenchIndex {

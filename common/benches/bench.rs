@@ -1,7 +1,7 @@
 use binggan::{BenchRunner, black_box};
+use boostcore_common::{BitSet, TinySet, serialize_vint_u32};
 use rand::rng;
 use rand::seq::IteratorRandom;
-use boostcore_common::{BitSet, TinySet, serialize_vint_u32};
 
 fn bench_vint() {
     let mut runner = BenchRunner::new();

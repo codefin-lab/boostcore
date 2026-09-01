@@ -1,11 +1,11 @@
 use binggan::{black_box, BenchGroup, BenchRunner};
-use rand::prelude::*;
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use boostcore::collector::{Collector, Count, DocSetCollector, TopDocs};
 use boostcore::query::{Query, QueryParser};
 use boostcore::schema::{Schema, FAST, INDEXED, TEXT};
 use boostcore::{doc, Index, Order, ReloadPolicy, Searcher};
+use rand::prelude::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 
 #[derive(Clone)]
 struct BenchIndex {

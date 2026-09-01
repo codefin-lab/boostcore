@@ -17,14 +17,14 @@
 // - Use `cargo bench --bench boolean_conjunction` to run.
 
 use binggan::{black_box, BenchGroup, BenchRunner};
-use rand::prelude::*;
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use boostcore::collector::sort_key::SortByStaticFastValue;
 use boostcore::collector::{Collector, Count, TopDocs};
 use boostcore::query::QueryParser;
 use boostcore::schema::{Schema, FAST, TEXT};
 use boostcore::{doc, Index, Order, ReloadPolicy, Searcher};
+use rand::prelude::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 
 #[derive(Clone)]
 struct BenchIndex {

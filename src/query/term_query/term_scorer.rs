@@ -152,19 +152,19 @@ mod tests {
             bm25_weight,
         );
         let max_scorer = term_scorer.max_score();
-        crate::assert_nearly_equals!(max_scorer, 1.3990127);
+        crate::assert_nearly_equals!(max_scorer, 0.63591486);
         assert_eq!(term_scorer.doc(), 2);
         assert_eq!(term_scorer.term_freq(), 3);
-        assert_nearly_equals!(term_scorer.block_max_score(), 1.3676447);
-        assert_nearly_equals!(term_scorer.score(), 1.0892314);
+        assert_nearly_equals!(term_scorer.block_max_score(), 0.62165666);
+        assert_nearly_equals!(term_scorer.score(), 0.49510515);
         assert_eq!(term_scorer.advance(), 3);
         assert_eq!(term_scorer.doc(), 3);
         assert_eq!(term_scorer.term_freq(), 12);
-        assert_nearly_equals!(term_scorer.score(), 1.3676447);
+        assert_nearly_equals!(term_scorer.score(), 0.62165666);
         assert_eq!(term_scorer.advance(), 7);
         assert_eq!(term_scorer.doc(), 7);
         assert_eq!(term_scorer.term_freq(), 8);
-        assert_nearly_equals!(term_scorer.score(), 0.72015285);
+        assert_nearly_equals!(term_scorer.score(), 0.3273422);
         assert_eq!(term_scorer.advance(), TERMINATED);
         Ok(())
     }
@@ -246,14 +246,14 @@ mod tests {
         let fieldnorms: Vec<u32> = std::iter::repeat_n(20u32, 300).collect();
         let bm25_weight = Bm25Weight::for_one_term(10, 129, 20.0);
         let mut docs = TermScorer::create_for_test(&doc_tfs[..], &fieldnorms[..], bm25_weight);
-        assert_nearly_equals!(docs.block_max_score(), 2.5161593);
+        assert_nearly_equals!(docs.block_max_score(), 1.1437087);
         docs.seek_block(135);
-        assert_nearly_equals!(docs.block_max_score(), 3.4597192);
+        assert_nearly_equals!(docs.block_max_score(), 1.5725995);
         docs.seek_block(256);
         // the block is not loaded yet.
-        assert_nearly_equals!(docs.block_max_score(), 5.2971773);
+        assert_nearly_equals!(docs.block_max_score(), 2.4078078);
         assert_eq!(256, docs.seek(256));
-        assert_nearly_equals!(docs.block_max_score(), 3.9539647);
+        assert_nearly_equals!(docs.block_max_score(), 1.7972567);
     }
 
     fn test_block_wand_aux(term_query: &TermQuery, searcher: &Searcher) -> crate::Result<()> {

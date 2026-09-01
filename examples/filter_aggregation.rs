@@ -7,12 +7,12 @@
 // your data in a single query, like "average price overall + average price for
 // electronics + count of in-stock items".
 
-use serde_json::json;
 use boostcore::aggregation::agg_req::Aggregations;
 use boostcore::aggregation::AggregationCollector;
 use boostcore::query::AllQuery;
 use boostcore::schema::{Schema, FAST, INDEXED, TEXT};
 use boostcore::{doc, Index};
+use serde_json::json;
 
 fn main() -> boostcore::Result<()> {
     // Create a simple product schema

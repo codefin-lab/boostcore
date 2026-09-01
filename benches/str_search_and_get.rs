@@ -12,14 +12,14 @@
 use std::ops::Bound;
 
 use binggan::{black_box, BenchGroup, BenchRunner};
-use rand::prelude::*;
-use rand::rngs::StdRng;
-use rand::SeedableRng;
 use boostcore::collector::{Count, DocSetCollector};
 use boostcore::query::RangeQuery;
 use boostcore::schema::document::TantivyDocument;
 use boostcore::schema::{Schema, Value, FAST, STORED, STRING};
 use boostcore::{doc, Index, ReloadPolicy, Searcher, Term};
+use rand::prelude::*;
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 
 #[derive(Clone)]
 struct BenchIndex {

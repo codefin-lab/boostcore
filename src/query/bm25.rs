@@ -22,6 +22,17 @@ pub trait Bm25StatisticsProvider {
 
     /// The number of documents containing the given term.
     fn doc_freq(&self, term: &Term) -> crate::Result<u64>;
+
+    /// How much text stands where this term stands, and in how many documents.
+    ///
+    /// A JSON field holds a whole document, and a term inside it names one
+    /// path of that document. Scoring it against the field would measure a
+    /// title against the length of everything the document holds; this
+    /// measures it against the other titles. `None` where the term names no
+    /// path, or where the index was written before the paths were counted.
+    fn path_statistics(&self, _term: &Term) -> Option<(u64, u64)> {
+        None
+    }
 }
 
 impl Bm25StatisticsProvider for Searcher {
@@ -46,6 +57,33 @@ impl Bm25StatisticsProvider for Searcher {
 
     fn doc_freq(&self, term: &Term) -> crate::Result<u64> {
         self.doc_freq(term)
+    }
+
+    fn path_statistics(&self, term: &Term) -> Option<(u64, u64)> {
+        // a JSON term is written as its path, an end marker, and then the
+        // value: everything before the marker is the path
+        let value = term.serialized_value_bytes();
+        let end = value
+            .iter()
+            .position(|b| *b == common::json_path_writer::JSON_END_OF_PATH)?;
+        let path = &value[..end];
+        if path.is_empty() {
+            return None;
+        }
+        let mut docs = 0u64;
+        let mut tokens = 0u64;
+        let mut found = false;
+        for reader in self.segment_readers() {
+            if let Some((d, t)) = reader
+                .fieldnorms_readers()
+                .json_path_stats(term.field(), path)
+            {
+                docs += d;
+                tokens += t;
+                found = true;
+            }
+        }
+        found.then_some((docs, tokens))
     }
 }
 
@@ -106,8 +144,17 @@ impl Bm25Weight {
             );
         }
 
-        let total_num_tokens = statistics.total_num_tokens(field)?;
-        let total_num_docs = statistics.total_num_docs()?;
+        // a term that names a path inside a JSON field is scored against that
+        // path: how long the other values there are, and how many documents
+        // have one at all
+        let own = statistics.path_statistics(&terms[0]);
+        let (total_num_tokens, total_num_docs) = match own {
+            Some((docs, tokens)) if docs > 0 => (tokens, docs),
+            _ => (
+                statistics.total_num_tokens(field)?,
+                statistics.total_num_docs()?,
+            ),
+        };
         let average_fieldnorm = total_num_tokens as Score / total_num_docs as Score;
 
         if terms.len() == 1 {
@@ -156,7 +203,10 @@ impl Bm25Weight {
     }
 
     pub(crate) fn new(idf_explain: Explanation, average_fieldnorm: Score) -> Bm25Weight {
-        let weight = idf_explain.value() * (1.0 + K1);
+        // Lucene writes the saturation as `freq / (freq + k1 * ...)`, without
+        // the `(k1 + 1)` the textbook puts on top of it: it is the same
+        // ranking, and the same number OpenSearch reports.
+        let weight = idf_explain.value();
         Bm25Weight {
             idf_explain: Some(idf_explain),
             weight,
@@ -165,7 +215,7 @@ impl Bm25Weight {
         }
     }
     pub(crate) fn new_without_explain(idf: f32, average_fieldnorm: Score) -> Bm25Weight {
-        let weight = idf * (1.0 + K1);
+        let weight = idf;
         Bm25Weight {
             idf_explain: None,
             weight,
@@ -217,7 +267,6 @@ impl Bm25Weight {
         tf_explanation.add_const("avgdl, average length of field", self.average_fieldnorm);
 
         let mut explanation = Explanation::new("TermQuery, product of...", score);
-        explanation.add_detail(Explanation::new("(K1+1)", K1 + 1.0));
         if let Some(idf_explain) = &self.idf_explain {
             explanation.add_detail(idf_explain.clone());
         }

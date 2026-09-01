@@ -6,13 +6,13 @@
 // - Term aggregation and compute the min price in each bucket
 // ---
 
-use serde_json::{Deserializer, Value};
 use boostcore::aggregation::agg_req::Aggregations;
 use boostcore::aggregation::agg_result::AggregationResults;
 use boostcore::aggregation::AggregationCollector;
 use boostcore::query::AllQuery;
 use boostcore::schema::{self, IndexRecordOption, Schema, TextFieldIndexing, FAST};
 use boostcore::{Index, IndexWriter, TantivyDocument};
+use serde_json::{Deserializer, Value};
 
 fn main() -> boostcore::Result<()> {
     // # Create Schema

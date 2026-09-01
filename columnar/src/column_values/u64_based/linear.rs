@@ -1,7 +1,7 @@
 use std::io;
 
-use common::{BinarySerializable, OwnedBytes};
 use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
+use common::{BinarySerializable, OwnedBytes};
 
 use super::ColumnValues;
 use super::line::Line;

@@ -2,11 +2,11 @@ use std::ops::RangeInclusive;
 use std::sync::Arc;
 
 use binggan::{InputGroup, black_box};
+use boostcore_columnar::ColumnValues;
 use common::OwnedBytes;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 use rand::{Rng, SeedableRng, random};
-use boostcore_columnar::ColumnValues;
 
 // TODO does this make sense for IPv6 ?
 fn generate_random() -> Vec<u64> {

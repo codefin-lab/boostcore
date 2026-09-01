@@ -1,11 +1,11 @@
 use std::collections::BTreeSet;
 use std::io;
 
+use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
 use common::file_slice::FileSlice;
 use criterion::{Criterion, criterion_group, criterion_main};
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
-use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
 
 const CHARSET: &[u8] = b"abcdefghij";
 

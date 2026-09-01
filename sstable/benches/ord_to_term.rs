@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
+use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
 use common::OwnedBytes;
 use common::file_slice::FileSlice;
 use criterion::{Criterion, criterion_group, criterion_main};
-use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
 
 fn make_test_sstable(suffix: &str) -> FileSlice {
     let mut builder = Dictionary::<MonotonicU64SSTable>::builder(Vec::new()).unwrap();

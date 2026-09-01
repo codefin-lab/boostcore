@@ -2,9 +2,9 @@ use std::io::{self, Write};
 use std::num::NonZeroU64;
 use std::ops::{Range, RangeInclusive};
 
+use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 use common::{BinarySerializable, OwnedBytes};
 use fastdivide::DividerU64;
-use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 
 use crate::column_values::u64_based::{ColumnCodec, ColumnCodecEstimator, ColumnStats};
 use crate::{ColumnValues, RowId};

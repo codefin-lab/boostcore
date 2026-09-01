@@ -2,9 +2,9 @@ use std::ops::RangeInclusive;
 use std::sync::Arc;
 
 use binggan::{InputGroup, black_box};
-use rand::prelude::*;
 use boostcore_columnar::column_values::{CodecType, serialize_and_load_u64_based_column_values};
 use boostcore_columnar::*;
+use rand::prelude::*;
 
 // Warning: this generates the same permutation at each call
 fn generate_permutation() -> Vec<u64> {

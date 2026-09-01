@@ -68,7 +68,9 @@ impl CompactDoc {
 
     /// Adding a facet to the document.
     pub fn add_facet<F>(&mut self, field: Field, path: F)
-    where Facet: From<F> {
+    where
+        Facet: From<F>,
+    {
         let facet = Facet::from(path);
         self.add_leaf_field_value(field, ReferenceValueLeaf::Facet(facet.encoded_str()));
     }
@@ -401,7 +403,9 @@ impl Eq for CompactDoc {}
 
 impl DocumentDeserialize for CompactDoc {
     fn deserialize<'de, D>(mut deserializer: D) -> Result<Self, DeserializeError>
-    where D: DocumentDeserializer<'de> {
+    where
+        D: DocumentDeserializer<'de>,
+    {
         let mut doc = CompactDoc::default();
         // TODO: Deserializing into OwnedValue is wasteful. The deserializer should be able to work
         // on slices and referenced data.
@@ -752,7 +756,9 @@ mod shared_value_tests {
         let _ = sb.build();
         let mut doc = CompactDoc::default();
         let object: BTreeMap<String, OwnedValue> =
-            [("k".to_string(), OwnedValue::Str("v".to_string()))].into_iter().collect();
+            [("k".to_string(), OwnedValue::Str("v".to_string()))]
+                .into_iter()
+                .collect();
         doc.add_object_to(&[a, b], object);
         let fields: Vec<Field> = doc.field_values().map(|(f, _)| f).collect();
         assert_eq!(fields, vec![a, b]);

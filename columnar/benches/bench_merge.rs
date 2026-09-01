@@ -1,8 +1,8 @@
 pub mod common;
 
 use binggan::BenchRunner;
-use common::{Card, generate_columnar_with_name};
 use boostcore_columnar::*;
+use common::{Card, generate_columnar_with_name};
 
 const NUM_DOCS: u32 = 100_000;
 

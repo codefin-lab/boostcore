@@ -1,16 +1,16 @@
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, InputGroup, PeakMemAlloc, INSTRUMENTED_SYSTEM};
+use boostcore::aggregation::agg_req::Aggregations;
+use boostcore::aggregation::AggregationCollector;
+use boostcore::query::{AllQuery, TermQuery};
+use boostcore::schema::{IndexRecordOption, Schema, TextFieldIndexing, FAST, STRING};
+use boostcore::{doc, DateTime, Index, Term};
 use rand::distr::weighted::WeightedIndex;
 use rand::rngs::StdRng;
 use rand::seq::IndexedRandom;
 use rand::{Rng, SeedableRng};
 use rand_distr::Distribution;
 use serde_json::json;
-use boostcore::aggregation::agg_req::Aggregations;
-use boostcore::aggregation::AggregationCollector;
-use boostcore::query::{AllQuery, TermQuery};
-use boostcore::schema::{IndexRecordOption, Schema, TextFieldIndexing, FAST, STRING};
-use boostcore::{doc, DateTime, Index, Term};
 
 #[global_allocator]
 pub static GLOBAL: &PeakMemAlloc<std::alloc::System> = &INSTRUMENTED_SYSTEM;

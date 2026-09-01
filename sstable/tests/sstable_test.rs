@@ -1,5 +1,5 @@
-use common::OwnedBytes;
 use boostcore_sstable::{Dictionary, MonotonicU64SSTable, VecU32ValueSSTable};
+use common::OwnedBytes;
 
 #[test]
 fn test_create_and_search_sstable() {

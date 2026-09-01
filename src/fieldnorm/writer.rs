@@ -61,7 +61,11 @@ impl FieldNormsWriter {
             .flatten()
             .map(|buf| buf.capacity())
             .sum::<usize>()
-            + self.json_buffers.values().map(|buf| buf.capacity()).sum::<usize>()
+            + self
+                .json_buffers
+                .values()
+                .map(|buf| buf.capacity())
+                .sum::<usize>()
     }
     /// Ensure that all documents in 0..max_doc have a byte associated with them
     /// in each of the fieldnorm vectors.
@@ -150,7 +154,9 @@ impl FieldNormsWriter {
         }
         let mut per_field: HashMap<u32, Vec<(&str, &[u8])>> = HashMap::new();
         for ((field_id, path_id), buffer) in &self.json_buffers {
-            let Some(path) = paths.get(*path_id as usize) else { continue };
+            let Some(path) = paths.get(*path_id as usize) else {
+                continue;
+            };
             per_field
                 .entry(*field_id)
                 .or_default()

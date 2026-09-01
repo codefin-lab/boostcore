@@ -1,7 +1,7 @@
-use criterion::{criterion_group, criterion_main, Criterion};
 use boostcore::tokenizer::{
     LowerCaser, RemoveLongFilter, SimpleTokenizer, TextAnalyzer, TokenizerManager,
 };
+use criterion::{criterion_group, criterion_main, Criterion};
 
 const ALICE_TXT: &str = include_str!("alice.txt");
 

@@ -1,7 +1,7 @@
 use binggan::{InputGroup, black_box};
+use boostcore_columnar::column_values::{CodecType, serialize_u64_based_column_values};
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
-use boostcore_columnar::column_values::{CodecType, serialize_u64_based_column_values};
 
 fn get_data() -> Vec<u64> {
     let mut rng = StdRng::seed_from_u64(2u64);

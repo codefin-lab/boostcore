@@ -163,8 +163,8 @@ pub(crate) mod tests {
     pub fn test_phrase_score() -> crate::Result<()> {
         let index = create_index(&["a b c", "a b c a b"])?;
         let scores = test_query(0, &index, vec!["a", "b"]);
-        assert_nearly_equals!(scores[0], 0.40618482);
-        assert_nearly_equals!(scores[1], 0.46844664);
+        assert_nearly_equals!(scores[0], 0.18462947);
+        assert_nearly_equals!(scores[1], 0.21293032);
         Ok(())
     }
 
@@ -173,8 +173,8 @@ pub(crate) mod tests {
     pub fn test_phrase_score_with_slop() -> crate::Result<()> {
         let index = create_index(&["a c b", "a b c a b"])?;
         let scores = test_query(1, &index, vec!["a", "b"]);
-        assert_nearly_equals!(scores[0], 0.40618482);
-        assert_nearly_equals!(scores[1], 0.46844664);
+        assert_nearly_equals!(scores[0], 0.18462947);
+        assert_nearly_equals!(scores[1], 0.21293032);
         Ok(())
     }
 
@@ -229,8 +229,8 @@ pub(crate) mod tests {
         let index = create_index(&["a b e c", "a e e e c", "a e e e e c"])?;
         let scores = test_query(3, &index, vec!["a", "c"]);
         assert_eq!(scores.len(), 2);
-        assert_nearly_equals!(scores[0], 0.29086056);
-        assert_nearly_equals!(scores[1], 0.26706287);
+        assert_nearly_equals!(scores[0], 0.13220935);
+        assert_nearly_equals!(scores[1], 0.12139221);
         Ok(())
     }
 
@@ -267,9 +267,9 @@ pub(crate) mod tests {
         ])?;
         let scores = test_query(3, &index, vec!["a", "b", "c"]);
         // The first and last matches.
-        assert_nearly_equals!(scores[0], 0.23091172);
-        assert_nearly_equals!(scores[1], 0.27310878);
-        assert_nearly_equals!(scores[3], 0.25024384);
+        assert_nearly_equals!(scores[0], 0.10495987);
+        assert_nearly_equals!(scores[1], 0.12414035);
+        assert_nearly_equals!(scores[3], 0.1137472);
         Ok(())
     }
 

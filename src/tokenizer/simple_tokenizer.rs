@@ -114,7 +114,11 @@ impl SimpleTokenStream<'_> {
             }
             if joins_numbers(c)
                 && next.map(|n| n.is_numeric()).unwrap_or(false)
-                && self.text[..offset].chars().next_back().map(|p| p.is_numeric()).unwrap_or(false)
+                && self.text[..offset]
+                    .chars()
+                    .next_back()
+                    .map(|p| p.is_numeric())
+                    .unwrap_or(false)
             {
                 continue;
             }
@@ -167,7 +171,10 @@ mod mark_tests {
     #[test]
     fn a_joined_consonant_does_not_end_the_word() {
         // Devanagari: the sign between the two consonants belongs to the word
-        assert_eq!(tokens("\u{0939}\u{093F}\u{0928}\u{094D}\u{0926}\u{0940}").len(), 1);
+        assert_eq!(
+            tokens("\u{0939}\u{093F}\u{0928}\u{094D}\u{0926}\u{0940}").len(),
+            1
+        );
         assert_eq!(tokens("hello world"), vec!["hello", "world"]);
     }
 }

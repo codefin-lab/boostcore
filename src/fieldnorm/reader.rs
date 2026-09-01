@@ -68,12 +68,53 @@ impl FieldNormReaders {
         Ok(paths)
     }
 
+    /// How much text one path of a JSON field holds across this segment: the
+    /// documents that have it, and the tokens under it.
+    ///
+    /// A score is worked out against the path a query names rather than
+    /// against the field that path sits in, which for a field holding a whole
+    /// document is the difference between a word being rare and a word being
+    /// ordinary.
+    pub fn json_path_stats(&self, field: Field, path: &[u8]) -> Option<(u64, u64)> {
+        let file = self.data.open_read_with_idx(field, 2)?;
+        let bytes = file.read_bytes().ok()?;
+        let bytes: &[u8] = bytes.as_slice();
+        if bytes.len() < 4 {
+            return None;
+        }
+        let read_u32 = |at: usize| -> Option<u32> {
+            Some(u32::from_le_bytes(bytes.get(at..at + 4)?.try_into().ok()?))
+        };
+        let read_u64 = |at: usize| -> Option<u64> {
+            Some(u64::from_le_bytes(bytes.get(at..at + 8)?.try_into().ok()?))
+        };
+        let num_paths = read_u32(0)? as usize;
+        let mut cursor = 4usize;
+        for _ in 0..num_paths {
+            let len = read_u32(cursor)? as usize;
+            cursor += 4;
+            let named = bytes.get(cursor..cursor + len)?;
+            cursor += len;
+            let docs = read_u64(cursor)?;
+            let tokens = read_u64(cursor + 8)?;
+            cursor += 16;
+            if named == path {
+                return Some((docs, tokens));
+            }
+        }
+        None
+    }
+
     /// The `FieldNormReader` for one path of a JSON field.
     ///
     /// `path` is the path as it is spelled inside a term: segments separated by
     /// `JSON_PATH_SEGMENT_SEP`, without the end-of-path byte. Returns `None`
     /// when the field has no per-path norms, or none for this path.
-    pub fn get_json_path(&self, field: Field, path: &[u8]) -> crate::Result<Option<FieldNormReader>> {
+    pub fn get_json_path(
+        &self,
+        field: Field,
+        path: &[u8],
+    ) -> crate::Result<Option<FieldNormReader>> {
         let Some(file) = self.data.open_read_with_idx(field, 1) else {
             return Ok(None);
         };

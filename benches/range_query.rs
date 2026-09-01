@@ -4,13 +4,13 @@ use std::ops::RangeInclusive;
 
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, BenchRunner, OutputValue, PeakMemAlloc, INSTRUMENTED_SYSTEM};
-use columnar::MonotonicallyMappableToU128;
-use rand::rngs::StdRng;
-use rand::{Rng, SeedableRng};
 use boostcore::collector::{Count, TopDocs};
 use boostcore::query::QueryParser;
 use boostcore::schema::*;
 use boostcore::{doc, Index};
+use columnar::MonotonicallyMappableToU128;
+use rand::rngs::StdRng;
+use rand::{Rng, SeedableRng};
 
 #[global_allocator]
 pub static GLOBAL: &PeakMemAlloc<std::alloc::System> = &INSTRUMENTED_SYSTEM;

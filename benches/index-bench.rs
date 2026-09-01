@@ -1,6 +1,6 @@
-use criterion::{criterion_group, criterion_main, BatchSize, Bencher, Criterion, Throughput};
 use boostcore::schema::{TantivyDocument, FAST, INDEXED, STORED, STRING, TEXT};
 use boostcore::{tokenizer, Index, IndexWriter};
+use criterion::{criterion_group, criterion_main, BatchSize, Bencher, Criterion, Throughput};
 
 const HDFS_LOGS: &str = include_str!("hdfs.json");
 const GH_LOGS: &str = include_str!("gh.json");

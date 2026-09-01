@@ -2,8 +2,8 @@ use std::io::{self, Read, Write};
 use std::ops::Range;
 use std::sync::Arc;
 
-use common::{BinarySerializable, FixedSize, OwnedBytes};
 use boostcore_bitpacker::{BitPacker, compute_num_bits};
+use common::{BinarySerializable, FixedSize, OwnedBytes};
 use tantivy_fst::raw::Fst;
 use tantivy_fst::{Automaton, IntoStreamer, Map, MapBuilder, Streamer};
 
