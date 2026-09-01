@@ -22,7 +22,10 @@ pub struct SimpleTokenStream<'a> {
 /// own, and a tokenizer that stopped at it would cut a word in half.
 #[inline]
 fn part_of_word(c: char) -> bool {
-    c.is_alphanumeric() || is_combining_mark(c)
+    // Unicode counts the underscore as something that joins two words rather
+    // than as something between them, and so does Lucene: `_hashsign_test` is
+    // one word.
+    c.is_alphanumeric() || c == '_' || is_combining_mark(c)
 }
 
 /// The ranges of characters that are written onto another one.
