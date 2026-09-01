@@ -123,6 +123,30 @@ impl CompactDoc {
         self.add_field_value(field, &OwnedValue::from(object));
     }
 
+    /// Add one object under several fields, converting it once.
+    ///
+    /// A document indexed two ways -- tokenized under one field, untouched
+    /// under another -- would otherwise pay for the conversion twice, and for
+    /// a JSON document that conversion is most of what writing it costs. The
+    /// value is written into the document once and the fields point at it.
+    pub fn add_object_to(&mut self, fields: &[Field], object: BTreeMap<String, OwnedValue>) {
+        self.add_field_value_to(fields, &OwnedValue::from(object));
+    }
+
+    /// Add one value under several fields, converting it once.
+    pub fn add_field_value_to<'a, V: Value<'a>>(&mut self, fields: &[Field], value: V) {
+        let value_addr = self.add_value(value);
+        for field in fields {
+            self.field_values.push(FieldValueAddr {
+                field: field
+                    .field_id()
+                    .try_into()
+                    .expect("support only up to u16::MAX field ids"),
+                value_addr,
+            });
+        }
+    }
+
     /// Add a (field, value) to the document.
     ///
     /// `OwnedValue` implements Value, which should be easiest to use, but is not the most
@@ -712,6 +736,34 @@ impl DocParsingError {
     fn invalid_json(invalid_json: &str) -> Self {
         let sample = invalid_json.chars().take(20).collect();
         DocParsingError::InvalidJson(sample)
+    }
+}
+
+#[cfg(test)]
+mod shared_value_tests {
+    use super::*;
+    use crate::schema::{Schema, TEXT};
+
+    #[test]
+    fn one_object_can_stand_under_two_fields() {
+        let mut sb = Schema::builder();
+        let a = sb.add_json_field("a", TEXT);
+        let b = sb.add_json_field("b", TEXT);
+        let _ = sb.build();
+        let mut doc = CompactDoc::default();
+        let object: BTreeMap<String, OwnedValue> =
+            [("k".to_string(), OwnedValue::Str("v".to_string()))].into_iter().collect();
+        doc.add_object_to(&[a, b], object);
+        let fields: Vec<Field> = doc.field_values().map(|(f, _)| f).collect();
+        assert_eq!(fields, vec![a, b]);
+        for (_, value) in doc.field_values() {
+            let ReferenceValue::Object(mut entries) = value.as_value() else {
+                panic!("an object went in");
+            };
+            let (key, held) = entries.next().expect("one entry");
+            assert_eq!(key, "k");
+            assert_eq!(held.as_value().as_str(), Some("v"));
+        }
     }
 }
 
