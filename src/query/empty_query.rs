@@ -49,6 +49,14 @@ impl DocSet for EmptyScorer {
         TERMINATED
     }
 
+    /// An empty docset is born terminated, so it is already at (or past) any
+    /// target. The default implementation would trip its `doc <= target`
+    /// assertion, which callers like `BooleanWeight::explain` hit when they
+    /// seek every clause of a query to the document being explained.
+    fn seek(&mut self, _target: DocId) -> DocId {
+        TERMINATED
+    }
+
     fn size_hint(&self) -> u32 {
         0
     }
@@ -72,6 +80,15 @@ mod tests {
         let mut empty_scorer = EmptyScorer;
         assert_eq!(empty_scorer.doc(), TERMINATED);
         assert_eq!(empty_scorer.advance(), TERMINATED);
+        assert_eq!(empty_scorer.doc(), TERMINATED);
+    }
+
+    #[test]
+    fn test_empty_scorer_seek() {
+        let mut empty_scorer = EmptyScorer;
+        assert_eq!(empty_scorer.seek(0u32), TERMINATED);
+        assert_eq!(empty_scorer.seek(7u32), TERMINATED);
+        assert_eq!(empty_scorer.seek(TERMINATED), TERMINATED);
         assert_eq!(empty_scorer.doc(), TERMINATED);
     }
 }
