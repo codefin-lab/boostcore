@@ -29,9 +29,16 @@ fn part_of_word(c: char) -> bool {
 }
 
 /// The characters that stand between two letters of the same word.
+///
+/// Unicode's word-break rules let a dot or a colon join letters the way an
+/// apostrophe does, so `example.com`, `u.s.a` and `x:y` are each one word;
+/// a dot with nothing after it, as at the end of a sentence, still ends one.
 #[inline]
 fn joins_letters(c: char) -> bool {
-    matches!(c, '\'' | '\u{2019}' | '\u{00B7}' | '\u{05F4}' | '\u{FF07}')
+    matches!(
+        c,
+        '\'' | '\u{2019}' | '\u{00B7}' | '\u{05F4}' | '\u{FF07}' | '.' | ':' | '\u{2018}' | '\u{2024}'
+    )
 }
 
 /// The characters that stand between two digits of the same number.
@@ -109,7 +116,13 @@ impl SimpleTokenStream<'_> {
             // comma between two digits is inside the number the same way:
             // `3.14` is one.
             let next = self.text[offset + c.len_utf8()..].chars().next();
-            if joins_letters(c) && next.map(part_of_word).unwrap_or(false) {
+            // a letter has to stand on both sides: `a.b` is one word, `a.1`
+            // and `1.a` are not, and `3.14` is a number's business below
+            let before = self.text[..offset].chars().next_back();
+            if joins_letters(c)
+                && next.map(|n| n.is_alphabetic() || is_combining_mark(n)).unwrap_or(false)
+                && before.map(|p| p.is_alphabetic() || is_combining_mark(p)).unwrap_or(false)
+            {
                 continue;
             }
             if joins_numbers(c)
