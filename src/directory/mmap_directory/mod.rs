@@ -333,7 +333,7 @@ impl Write for SafeFileWriter {
 impl TerminatingWrite for SafeFileWriter {
     fn terminate_ref(&mut self, _: AntiCallToken) -> io::Result<()> {
         self.0.flush()?;
-        self.0.sync_data()?;
+        sync_file(&self.0)?;
         Ok(())
     }
 }
@@ -364,7 +364,7 @@ pub(crate) fn atomic_write(path: &Path, content: &[u8]) -> io::Result<()> {
     let mut tempfile = tempfile::Builder::new().tempfile_in(parent_path)?;
     tempfile.write_all(content)?;
     tempfile.flush()?;
-    tempfile.as_file_mut().sync_data()?;
+    sync_file(tempfile.as_file())?;
     tempfile.into_temp_path().persist(path)?;
     Ok(())
 }
@@ -518,7 +518,7 @@ impl Directory for MmapDirectory {
         open_opts.read(true);
 
         let fd = open_opts.open(&self.inner.root_path)?;
-        fd.sync_data()?;
+        sync_file(&fd)?;
         Ok(())
     }
 }
@@ -699,5 +699,24 @@ mod tests {
                 None
             }
         });
+    }
+}
+
+/// Flush a file's data to the device the way Lucene does: a plain `fsync`.
+///
+/// Rust's `sync_data` and `sync_all` become `fcntl(F_FULLFSYNC)` on macOS,
+/// which also flushes the drive's own cache and costs many times an
+/// `fsync`; Java's `FileChannel.force` there is the plain `fsync`, so
+/// that is the durability an index written by Lucene has, and what this
+/// gives on the same machine. Elsewhere `sync_data` is the same call.
+pub(crate) fn sync_file(file: &std::fs::File) -> io::Result<()> {
+    #[cfg(target_os = "macos")]
+    {
+        use std::os::unix::io::AsRawFd;
+        if unsafe { libc::fsync(file.as_raw_fd()) } == 0 { Ok(()) } else { Err(io::Error::last_os_error()) }
+    }
+    #[cfg(not(target_os = "macos"))]
+    {
+        file.sync_data()
     }
 }
