@@ -237,7 +237,7 @@ impl IndexMerger {
         if paths.is_empty() {
             return Ok(());
         }
-        let mut norms: Vec<(String, Vec<u8>)> = Vec::with_capacity(paths.len());
+        let mut norms: Vec<(String, Vec<u8>, Option<u64>)> = Vec::with_capacity(paths.len());
         for path in paths {
             let readers: Vec<Option<FieldNormReader>> = self
                 .readers
@@ -249,18 +249,52 @@ impl IndexMerger {
                 })
                 .collect::<Result<_, _>>()?;
             let mut data = Vec::with_capacity(self.max_doc as usize);
+            // what the surviving documents' length bytes add up to, per source
+            // segment, so the deleted ones can be taken off an exact count
+            let mut kept_lossy = vec![0u64; self.readers.len()];
             for old_doc_addr in doc_id_mapping.iter_old_doc_addrs() {
-                let fieldnorm_id = readers[old_doc_addr.segment_ord as usize]
+                let ord = old_doc_addr.segment_ord as usize;
+                let fieldnorm_id = readers[ord]
                     .as_ref()
                     .map(|reader| reader.fieldnorm_id(old_doc_addr.doc_id))
                     .unwrap_or(0u8);
+                kept_lossy[ord] +=
+                    crate::fieldnorm::FieldNormReader::id_to_fieldnorm(fieldnorm_id) as u64;
                 data.push(fieldnorm_id);
             }
-            norms.push((path, data));
+            // A merged segment's token count is the source segments' exact
+            // counts, less what the documents the merge drops held. Those
+            // documents' exact lengths are gone -- only their bytes remain --
+            // so what they held is taken off by their bytes: exact where
+            // nothing was deleted, and off by the rounding of deleted long
+            // values where something was, which is far nearer than adding
+            // every byte up again.
+            let mut exact = 0u64;
+            for (ord, reader) in self.readers.iter().enumerate() {
+                let Some(norms_here) = readers[ord].as_ref() else {
+                    continue;
+                };
+                let Some((_, tokens)) = reader
+                    .fieldnorms_readers()
+                    .json_path_stats(field, path.as_bytes())
+                else {
+                    continue;
+                };
+                let all_lossy: u64 = (0..reader.max_doc())
+                    .map(|doc| {
+                        crate::fieldnorm::FieldNormReader::id_to_fieldnorm(
+                            norms_here.fieldnorm_id(doc),
+                        ) as u64
+                    })
+                    .sum();
+                let dropped = all_lossy.saturating_sub(kept_lossy[ord]);
+                exact += tokens.saturating_sub(dropped);
+            }
+            norms.push((path, data, Some(exact)));
         }
-        let borrowed: Vec<(&str, &[u8])> = norms
+        let borrowed: Vec<(&str, &[u8], Option<u64>)> = norms
             .iter()
-            .map(|(path, data)| (path.as_str(), &data[..]))
+            .map(|(path, data, exact)| (path.as_str(), &data[..], *exact))
             .collect();
         fieldnorms_serializer.serialize_json_paths(field, &borrowed)?;
         Ok(())

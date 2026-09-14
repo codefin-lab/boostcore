@@ -39,21 +39,21 @@ impl FieldNormsSerializer {
     pub fn serialize_json_paths(
         &mut self,
         field: Field,
-        paths: &[(&str, &[u8])],
+        paths: &[(&str, &[u8], Option<u64>)],
     ) -> io::Result<()> {
         let num_docs = paths
             .iter()
-            .map(|(_, norms)| norms.len())
+            .map(|(_, norms, _)| norms.len())
             .max()
             .unwrap_or(0);
         let write = self.composite_write.for_field_with_idx(field, 1);
         write.write_all(&(paths.len() as u32).to_le_bytes())?;
         write.write_all(&(num_docs as u32).to_le_bytes())?;
-        for (path, _) in paths {
+        for (path, _, _) in paths {
             write.write_all(&(path.len() as u32).to_le_bytes())?;
             write.write_all(path.as_bytes())?;
         }
-        for (_, norms) in paths {
+        for (_, norms, _) in paths {
             write.write_all(norms)?;
             // a path a later document never had still needs its byte
             for _ in norms.len()..num_docs {
@@ -67,15 +67,18 @@ impl FieldNormsSerializer {
         // the path happens to sit in
         let stats = self.composite_write.for_field_with_idx(field, 2);
         stats.write_all(&(paths.len() as u32).to_le_bytes())?;
-        for (path, norms) in paths {
+        for (path, norms, exact) in paths {
             let mut docs = 0u64;
-            let mut tokens = 0u64;
+            let mut lossy = 0u64;
             for byte in norms.iter() {
                 if *byte != 0 {
                     docs += 1;
-                    tokens += crate::fieldnorm::id_to_fieldnorm(*byte) as u64;
+                    lossy += crate::fieldnorm::id_to_fieldnorm(*byte) as u64;
                 }
             }
+            // the count kept exactly where there is one; the lengths added up
+            // only for a segment written before it was kept
+            let tokens = exact.unwrap_or(lossy);
             stats.write_all(&(path.len() as u32).to_le_bytes())?;
             stats.write_all(path.as_bytes())?;
             stats.write_all(&docs.to_le_bytes())?;

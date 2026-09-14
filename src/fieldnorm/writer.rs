@@ -21,6 +21,16 @@ pub struct FieldNormsWriter {
     /// was not searched on is long. Lucene's norm is per field; this is the
     /// same thing, one level down.
     json_buffers: HashMap<(u32, u32), Vec<u8>>,
+    /// How many tokens each path holds, counted exactly as they arrive.
+    ///
+    /// The byte a document keeps for its length is lossy above forty or so --
+    /// that is what lets it fit in a byte -- and adding those bytes back up
+    /// gave a path's token count short of the truth: 14,190 where the
+    /// documents held 14,362, an average length of 41.7 where Lucene, which
+    /// sums the real term frequencies, has 42.2, and every BM25 score on a long
+    /// field a little below the reference's. The average belongs to the index,
+    /// not to any one document, and nothing stops it being exact.
+    json_tokens: HashMap<(u32, u32), u64>,
 }
 
 impl FieldNormsWriter {
@@ -51,6 +61,7 @@ impl FieldNormsWriter {
         FieldNormsWriter {
             fieldnorms_buffers,
             json_buffers: HashMap::new(),
+            json_tokens: HashMap::new(),
         }
     }
 
@@ -131,6 +142,10 @@ impl FieldNormsWriter {
             buffer.resize(doc as usize + 1, 0u8);
         }
         buffer[doc as usize] = fieldnorm_to_id(fieldnorm);
+        *self
+            .json_tokens
+            .entry((field.field_id(), path_id))
+            .or_default() += u64::from(fieldnorm);
     }
 
     /// Serialize the seen fieldnorm values to the serializer for all fields.
@@ -152,18 +167,19 @@ impl FieldNormsWriter {
         ) {
             fieldnorms_serializer.serialize_field(field, fieldnorms_buffer)?;
         }
-        let mut per_field: HashMap<u32, Vec<(&str, &[u8])>> = HashMap::new();
+        let mut per_field: HashMap<u32, Vec<(&str, &[u8], Option<u64>)>> = HashMap::new();
         for ((field_id, path_id), buffer) in &self.json_buffers {
             let Some(path) = paths.get(*path_id as usize) else {
                 continue;
             };
+            let tokens = self.json_tokens.get(&(*field_id, *path_id)).copied();
             per_field
                 .entry(*field_id)
                 .or_default()
-                .push((path, &buffer[..]));
+                .push((path, &buffer[..], tokens));
         }
         for (field_id, mut paths_norms) in per_field {
-            paths_norms.sort_unstable_by_key(|(path, _)| *path);
+            paths_norms.sort_unstable_by_key(|(path, _, _)| *path);
             fieldnorms_serializer
                 .serialize_json_paths(Field::from_field_id(field_id), &paths_norms)?;
         }
