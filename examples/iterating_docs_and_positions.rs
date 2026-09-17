@@ -7,13 +7,13 @@
 // the list of documents containing a term, getting
 // its term frequency, and accessing its positions.
 
-use boostcore::postings::Postings;
+use velocore::postings::Postings;
 // ---
 // Importing tantivy...
-use boostcore::schema::*;
-use boostcore::{doc, DocSet, Index, IndexWriter, TERMINATED};
+use velocore::schema::*;
+use velocore::{doc, DocSet, Index, IndexWriter, TERMINATED};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // We first create a schema for the sake of the
     // example. Check the `basic_search` example for more information.
     let mut schema_builder = Schema::builder();

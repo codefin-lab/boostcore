@@ -4,10 +4,10 @@ use std::ops::Bound;
 //
 // Below is an example of creating an indexed integer field in your schema
 // You can use RangeQuery to get a Count of all occurrences in a given range.
-use boostcore::collector::Count;
-use boostcore::query::RangeQuery;
-use boostcore::schema::{Schema, INDEXED};
-use boostcore::{doc, Index, IndexWriter, Result, Term};
+use velocore::collector::Count;
+use velocore::query::RangeQuery;
+use velocore::schema::{Schema, INDEXED};
+use velocore::{doc, Index, IndexWriter, Result, Term};
 
 fn main() -> Result<()> {
     // For the sake of simplicity, this schema will only have 1 field

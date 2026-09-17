@@ -2,18 +2,18 @@
 //
 // This example shows how the DateTime field can be used
 
-use boostcore::collector::TopDocs;
-use boostcore::query::QueryParser;
-use boostcore::schema::{DateOptions, Document, Schema, Value, INDEXED, STORED, STRING};
-use boostcore::{Index, IndexWriter, TantivyDocument};
+use velocore::collector::TopDocs;
+use velocore::query::QueryParser;
+use velocore::schema::{DateOptions, Document, Schema, Value, INDEXED, STORED, STRING};
+use velocore::{Index, IndexWriter, TantivyDocument};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     let mut schema_builder = Schema::builder();
     let opts = DateOptions::from(INDEXED)
         .set_stored()
         .set_fast()
-        .set_precision(boostcore::schema::DateTimePrecision::Seconds);
+        .set_precision(velocore::schema::DateTimePrecision::Seconds);
     // Add `occurred_at` date field type
     let occurred_at = schema_builder.add_date_field("occurred_at", opts);
     let event_type = schema_builder.add_text_field("event", STRING | STORED);

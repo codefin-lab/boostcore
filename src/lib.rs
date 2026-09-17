@@ -19,10 +19,10 @@
 //! # use std::path::Path;
 //! # use std::fs;
 //! # use tempfile::TempDir;
-//! # use boostcore::collector::TopDocs;
-//! # use boostcore::query::QueryParser;
-//! # use boostcore::schema::*;
-//! # use boostcore::{doc, DocAddress, Index, IndexWriter, Score};
+//! # use velocore::collector::TopDocs;
+//! # use velocore::query::QueryParser;
+//! # use velocore::schema::*;
+//! # use velocore::{doc, DocAddress, Index, IndexWriter, Score};
 //! #
 //! # fn main() {
 //! #     // Let's create a temporary directory for the
@@ -36,7 +36,7 @@
 //! #     }
 //! # }
 //! #
-//! # fn run_example(index_path: &Path) -> boostcore::Result<()> {
+//! # fn run_example(index_path: &Path) -> velocore::Result<()> {
 //! // First we need to define a schema ...
 //!
 //! // `TEXT` means the field should be tokenized and indexed,

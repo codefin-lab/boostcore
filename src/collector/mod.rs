@@ -34,12 +34,12 @@
 //! in their respective position.
 //!
 //! ```rust
-//! # use boostcore::schema::*;
-//! # use boostcore::*;
-//! # use boostcore::query::*;
-//! use boostcore::collector::{Count, TopDocs};
+//! # use velocore::schema::*;
+//! # use velocore::*;
+//! # use velocore::query::*;
+//! use velocore::collector::{Count, TopDocs};
 //! #
-//! # fn main() -> boostcore::Result<()> {
+//! # fn main() -> velocore::Result<()> {
 //! # let mut schema_builder = Schema::builder();
 //! #     let title = schema_builder.add_text_field("title", TEXT);
 //! #     let schema = schema_builder.build();

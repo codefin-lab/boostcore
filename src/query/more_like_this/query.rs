@@ -11,8 +11,8 @@ use crate::DocAddress;
 /// # Examples
 ///
 /// ```
-/// use boostcore::DocAddress;
-/// use boostcore::query::MoreLikeThisQuery;
+/// use velocore::DocAddress;
+/// use velocore::query::MoreLikeThisQuery;
 ///
 /// let query = MoreLikeThisQuery::builder()
 ///     .with_min_doc_frequency(1)

@@ -1,21 +1,21 @@
 [package]
-name = "boostcore-columnar"
+name = "velocore-columnar"
 version = "0.7.0"
 edition = "2024"
 license = "MIT"
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
-description = "column oriented storage for BoostCore, a fork of tantivy"
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
+description = "column oriented storage for VeloCore, a fork of tantivy"
 categories = ["database-implementations", "data-structures", "compression"]
 
 [dependencies]
 itertools = "0.14.0"
 fastdivide = "0.4.0"
 
-stacker = { version= "0.7", path = "../stacker", package="boostcore-stacker"}
-sstable = { version= "0.7", path = "../sstable", package = "boostcore-sstable" }
-common = { version= "0.11", path = "../common", package = "boostcore-common" }
-boostcore-bitpacker = { version= "0.10", path = "../bitpacker/" }
+stacker = { version= "0.7", path = "../stacker", package="velocore-stacker"}
+sstable = { version= "0.7", path = "../sstable", package = "velocore-sstable" }
+common = { version= "0.11", path = "../common", package = "velocore-common" }
+velocore-bitpacker = { version= "0.10", path = "../bitpacker/" }
 serde = "1.0.152"
 downcast-rs = "2.0.1"
 

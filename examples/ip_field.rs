@@ -3,12 +3,12 @@
 // This example shows how the ip field can be used
 // with IpV6 and IpV4.
 
-use boostcore::collector::{Count, TopDocs};
-use boostcore::query::QueryParser;
-use boostcore::schema::{Schema, FAST, INDEXED, STORED, STRING};
-use boostcore::{Index, IndexWriter, TantivyDocument};
+use velocore::collector::{Count, TopDocs};
+use velocore::query::QueryParser;
+use velocore::schema::{Schema, FAST, INDEXED, STORED, STRING};
+use velocore::{Index, IndexWriter, TantivyDocument};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     // We set the IP field as `INDEXED`, so it can be searched
     // `FAST` will create a fast field. The fast field will be used to execute search queries.

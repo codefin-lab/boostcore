@@ -131,12 +131,12 @@ impl<TFruit: Fruit> FruitHandle<TFruit> {
 /// documentation](./index.html#combining-several-collectors).
 ///
 /// ```rust
-/// use boostcore::collector::{Count, TopDocs, MultiCollector};
-/// use boostcore::query::QueryParser;
-/// use boostcore::schema::{Schema, TEXT};
-/// use boostcore::{doc, Index};
+/// use velocore::collector::{Count, TopDocs, MultiCollector};
+/// use velocore::query::QueryParser;
+/// use velocore::schema::{Schema, TEXT};
+/// use velocore::{doc, Index};
 ///
-/// # fn main() -> boostcore::Result<()> {
+/// # fn main() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let schema = schema_builder.build();

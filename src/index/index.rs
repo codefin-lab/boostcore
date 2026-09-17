@@ -82,8 +82,8 @@ fn save_new_metas(
 /// # Examples
 ///
 /// ```
-/// use boostcore::schema::*;
-/// use boostcore::{Index, IndexSettings};
+/// use velocore::schema::*;
+/// use velocore::{Index, IndexSettings};
 ///
 /// let mut schema_builder = Schema::builder();
 /// let id_field = schema_builder.add_text_field("id", STRING);

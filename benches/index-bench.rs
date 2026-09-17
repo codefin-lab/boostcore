@@ -1,5 +1,5 @@
-use boostcore::schema::{TantivyDocument, FAST, INDEXED, STORED, STRING, TEXT};
-use boostcore::{tokenizer, Index, IndexWriter};
+use velocore::schema::{TantivyDocument, FAST, INDEXED, STORED, STRING, TEXT};
+use velocore::{tokenizer, Index, IndexWriter};
 use criterion::{criterion_group, criterion_main, BatchSize, Bencher, Criterion, Throughput};
 
 const HDFS_LOGS: &str = include_str!("hdfs.json");
@@ -9,7 +9,7 @@ const WIKI: &str = include_str!("wiki.json");
 fn benchmark(
     b: &mut Bencher,
     input: &str,
-    schema: boostcore::schema::Schema,
+    schema: velocore::schema::Schema,
     commit: bool,
     parse_json: bool,
     is_dynamic: bool,
@@ -23,7 +23,7 @@ fn benchmark(
     }
 }
 
-fn get_index(schema: boostcore::schema::Schema) -> Index {
+fn get_index(schema: velocore::schema::Schema) -> Index {
     let mut index = Index::create_in_ram(schema.clone());
     let ff_tokenizer_manager = tokenizer::TokenizerManager::default();
     ff_tokenizer_manager.register(
@@ -39,10 +39,10 @@ fn get_index(schema: boostcore::schema::Schema) -> Index {
 fn _benchmark(
     b: &mut Bencher,
     input: &str,
-    schema: boostcore::schema::Schema,
+    schema: velocore::schema::Schema,
     commit: bool,
     include_json_parsing: bool,
-    create_doc: impl Fn(&boostcore::schema::Schema, &str) -> TantivyDocument,
+    create_doc: impl Fn(&velocore::schema::Schema, &str) -> TantivyDocument,
 ) {
     if include_json_parsing {
         let lines: Vec<&str> = input.trim().split('\n').collect();
@@ -84,41 +84,41 @@ fn _benchmark(
 fn benchmark_dynamic_json(
     b: &mut Bencher,
     input: &str,
-    schema: boostcore::schema::Schema,
+    schema: velocore::schema::Schema,
     commit: bool,
     parse_json: bool,
 ) {
     let json_field = schema.get_field("json").unwrap();
     _benchmark(b, input, schema, commit, parse_json, |_schema, doc_json| {
         let json_val: serde_json::Value = serde_json::from_str(doc_json).unwrap();
-        boostcore::doc!(json_field=>json_val)
+        velocore::doc!(json_field=>json_val)
     })
 }
 
 pub fn hdfs_index_benchmark(c: &mut Criterion) {
     let schema = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_u64_field("timestamp", INDEXED);
         schema_builder.add_text_field("body", TEXT);
         schema_builder.add_text_field("severity", STRING);
         schema_builder.build()
     };
     let schema_only_fast = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_u64_field("timestamp", FAST);
         schema_builder.add_text_field("body", FAST);
         schema_builder.add_text_field("severity", FAST);
         schema_builder.build()
     };
     let _schema_with_store = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_u64_field("timestamp", INDEXED | STORED);
         schema_builder.add_text_field("body", TEXT | STORED);
         schema_builder.add_text_field("severity", STRING | STORED);
         schema_builder.build()
     };
     let dynamic_schema = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_json_field("json", TEXT | FAST);
         schema_builder.build()
     };
@@ -157,12 +157,12 @@ pub fn hdfs_index_benchmark(c: &mut Criterion) {
 
 pub fn gh_index_benchmark(c: &mut Criterion) {
     let dynamic_schema = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_json_field("json", TEXT | FAST);
         schema_builder.build()
     };
     let dynamic_schema_fast = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_json_field("json", FAST);
         schema_builder.build()
     };
@@ -184,7 +184,7 @@ pub fn gh_index_benchmark(c: &mut Criterion) {
 
 pub fn wiki_index_benchmark(c: &mut Criterion) {
     let dynamic_schema = {
-        let mut schema_builder = boostcore::schema::SchemaBuilder::new();
+        let mut schema_builder = velocore::schema::SchemaBuilder::new();
         schema_builder.add_json_field("json", TEXT | FAST);
         schema_builder.build()
     };

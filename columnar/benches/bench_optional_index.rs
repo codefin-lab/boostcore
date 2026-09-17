@@ -1,5 +1,5 @@
 use binggan::{InputGroup, black_box};
-use boostcore_columnar::column_index::{OptionalIndex, Set};
+use velocore_columnar::column_index::{OptionalIndex, Set};
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
 

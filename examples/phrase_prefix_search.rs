@@ -1,7 +1,7 @@
-use boostcore::collector::TopDocs;
-use boostcore::query::QueryParser;
-use boostcore::schema::*;
-use boostcore::{doc, Index, IndexWriter, ReloadPolicy, Result};
+use velocore::collector::TopDocs;
+use velocore::query::QueryParser;
+use velocore::schema::*;
+use velocore::{doc, Index, IndexWriter, ReloadPolicy, Result};
 use tempfile::TempDir;
 
 fn main() -> Result<()> {

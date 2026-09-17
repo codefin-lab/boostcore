@@ -12,11 +12,11 @@
 use std::ops::Bound;
 
 use binggan::{black_box, BenchGroup, BenchRunner};
-use boostcore::collector::{Count, DocSetCollector};
-use boostcore::query::RangeQuery;
-use boostcore::schema::document::TantivyDocument;
-use boostcore::schema::{Schema, Value, FAST, STORED, STRING};
-use boostcore::{doc, Index, ReloadPolicy, Searcher, Term};
+use velocore::collector::{Count, DocSetCollector};
+use velocore::query::RangeQuery;
+use velocore::schema::document::TantivyDocument;
+use velocore::schema::{Schema, Value, FAST, STORED, STRING};
+use velocore::{doc, Index, ReloadPolicy, Searcher, Term};
 use rand::prelude::*;
 use rand::rngs::StdRng;
 use rand::SeedableRng;

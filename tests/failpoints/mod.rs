@@ -1,8 +1,8 @@
 use std::path::Path;
 
-use boostcore::directory::{Directory, ManagedDirectory, RamDirectory, TerminatingWrite};
-use boostcore::schema::{Schema, TEXT};
-use boostcore::{doc, Index, IndexWriter, Term};
+use velocore::directory::{Directory, ManagedDirectory, RamDirectory, TerminatingWrite};
+use velocore::schema::{Schema, TEXT};
+use velocore::{doc, Index, IndexWriter, Term};
 
 #[test]
 fn test_failpoints_managed_directory_gc_if_delete_fails() {
@@ -39,7 +39,7 @@ fn test_failpoints_managed_directory_gc_if_delete_fails() {
 }
 
 #[test]
-fn test_write_commit_fails() -> boostcore::Result<()> {
+fn test_write_commit_fails() -> velocore::Result<()> {
     let _fail_scenario_guard = fail::FailScenario::setup();
     let mut schema_builder = Schema::builder();
     let text_field = schema_builder.add_text_field("text", TEXT);
@@ -70,7 +70,7 @@ fn test_write_commit_fails() -> boostcore::Result<()> {
 // Details at
 // - https://github.com/quickwit-oss/tantivy/issues/1198
 #[test]
-fn test_fail_on_flush_segment() -> boostcore::Result<()> {
+fn test_fail_on_flush_segment() -> velocore::Result<()> {
     let _fail_scenario_guard = fail::FailScenario::setup();
     let mut schema_builder = Schema::builder();
     let text_field = schema_builder.add_text_field("text", TEXT);
@@ -89,7 +89,7 @@ fn test_fail_on_flush_segment() -> boostcore::Result<()> {
 }
 
 #[test]
-fn test_fail_on_flush_segment_but_one_worker_remains() -> boostcore::Result<()> {
+fn test_fail_on_flush_segment_but_one_worker_remains() -> velocore::Result<()> {
     let _fail_scenario_guard = fail::FailScenario::setup();
     let mut schema_builder = Schema::builder();
     let text_field = schema_builder.add_text_field("text", TEXT);
@@ -108,7 +108,7 @@ fn test_fail_on_flush_segment_but_one_worker_remains() -> boostcore::Result<()> 
 }
 
 #[test]
-fn test_fail_on_commit_segment() -> boostcore::Result<()> {
+fn test_fail_on_commit_segment() -> velocore::Result<()> {
     let _fail_scenario_guard = fail::FailScenario::setup();
     let mut schema_builder = Schema::builder();
     let text_field = schema_builder.add_text_field("text", TEXT);

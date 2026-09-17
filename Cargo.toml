@@ -1,13 +1,13 @@
 [package]
-name = "boostcore"
+name = "velocore"
 version = "0.26.1"
 authors = ["Paul Masurel <paul.masurel@gmail.com>"]
 license = "MIT"
 categories = ["database-implementations", "data-structures"]
-description = """BoostCore: the search engine library BoostSearch is built on, forked from tantivy"""
-documentation = "https://docs.rs/boostcore/"
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
+description = """VeloCore: the search engine library BoostSearch is built on, forked from tantivy"""
+documentation = "https://docs.rs/velocore/"
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
 readme = "README.md"
 keywords = ["search", "information", "retrieval"]
 edition = "2021"
@@ -58,13 +58,13 @@ measure_time = "0.9.0"
 arc-swap = "1.5.0"
 bon = "3.3.1"
 
-columnar = { version = "0.7", path = "./columnar", package = "boostcore-columnar" }
-sstable = { version = "0.7", path = "./sstable", package = "boostcore-sstable", optional = true }
-stacker = { version = "0.7", path = "./stacker", package = "boostcore-stacker" }
-query-grammar = { version = "0.26.0", path = "./query-grammar", package = "boostcore-query-grammar" }
-boostcore-bitpacker = { version = "0.10", path = "./bitpacker" }
-common = { version = "0.11", path = "./common/", package = "boostcore-common" }
-tokenizer-api = { version = "0.7", path = "./tokenizer-api", package = "boostcore-tokenizer-api" }
+columnar = { version = "0.7", path = "./columnar", package = "velocore-columnar" }
+sstable = { version = "0.7", path = "./sstable", package = "velocore-sstable", optional = true }
+stacker = { version = "0.7", path = "./stacker", package = "velocore-stacker" }
+query-grammar = { version = "0.26.0", path = "./query-grammar", package = "velocore-query-grammar" }
+velocore-bitpacker = { version = "0.10", path = "./bitpacker" }
+common = { version = "0.11", path = "./common/", package = "velocore-common" }
+tokenizer-api = { version = "0.7", path = "./tokenizer-api", package = "velocore-tokenizer-api" }
 sketches-ddsketch = { version = "0.4", features = ["use_serde"] }
 datasketches = "0.2.0"
 futures-util = { version = "0.3.28", optional = true }

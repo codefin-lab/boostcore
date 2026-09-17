@@ -1,4 +1,4 @@
-//! `boostcore_sstable` is a crate that provides a sorted string table data structure.
+//! `velocore_sstable` is a crate that provides a sorted string table data structure.
 //!
 //! It is used in `tantivy` to store the term dictionary.
 //!
@@ -13,7 +13,7 @@
 //!
 //! ```rust
 //! use common::OwnedBytes;
-//! use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
+//! use velocore_sstable::{Dictionary, MonotonicU64SSTable};
 //!
 //! // Create a new sstable in memory.
 //! let mut builder = Dictionary::<MonotonicU64SSTable>::builder(Vec::new()).unwrap();

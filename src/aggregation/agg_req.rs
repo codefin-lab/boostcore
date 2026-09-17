@@ -9,7 +9,7 @@
 //! # Example
 //!
 //! ```
-//! use boostcore::aggregation::agg_req::Aggregations;
+//! use velocore::aggregation::agg_req::Aggregations;
 //!
 //! let elasticsearch_compatible_json_req = r#"
 //! {

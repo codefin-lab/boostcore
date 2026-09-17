@@ -8,10 +8,10 @@
 //
 // ---
 // Importing tantivy...
-use boostcore::collector::TopDocs;
-use boostcore::query::TermQuery;
-use boostcore::schema::*;
-use boostcore::{doc, Index, IndexReader, IndexWriter};
+use velocore::collector::TopDocs;
+use velocore::query::TermQuery;
+use velocore::schema::*;
+use velocore::{doc, Index, IndexReader, IndexWriter};
 
 // A simple helper function to fetch a single document
 // given its id from our index.
@@ -19,7 +19,7 @@ use boostcore::{doc, Index, IndexReader, IndexWriter};
 fn extract_doc_given_isbn(
     reader: &IndexReader,
     isbn_term: &Term,
-) -> boostcore::Result<Option<TantivyDocument>> {
+) -> velocore::Result<Option<TantivyDocument>> {
     let searcher = reader.searcher();
 
     // This is the simplest query you can think of.
@@ -39,7 +39,7 @@ fn extract_doc_given_isbn(
     }
 }
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     //
     // Check out the *basic_search* example if this makes

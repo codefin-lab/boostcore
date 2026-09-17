@@ -35,12 +35,12 @@ impl Automaton for DfaWrapper {
 /// containing a specific term that is within
 /// Levenshtein distance
 /// ```rust
-/// use boostcore::collector::{Count, TopDocs};
-/// use boostcore::query::FuzzyTermQuery;
-/// use boostcore::schema::{Schema, TEXT};
-/// use boostcore::{doc, Index, IndexWriter, Term};
+/// use velocore::collector::{Count, TopDocs};
+/// use velocore::query::FuzzyTermQuery;
+/// use velocore::schema::{Schema, TEXT};
+/// use velocore::{doc, Index, IndexWriter, Term};
 ///
-/// fn example() -> boostcore::Result<()> {
+/// fn example() -> velocore::Result<()> {
 ///     let mut schema_builder = Schema::builder();
 ///     let title = schema_builder.add_text_field("title", TEXT);
 ///     let schema = schema_builder.build();

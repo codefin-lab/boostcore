@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
 use binggan::{InputGroup, black_box};
-use boostcore_columnar::ColumnValues;
-use boostcore_columnar::column_values::{CodecType, serialize_and_load_u64_based_column_values};
+use velocore_columnar::ColumnValues;
+use velocore_columnar::column_values::{CodecType, serialize_and_load_u64_based_column_values};
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
 

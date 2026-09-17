@@ -13,15 +13,15 @@ use crate::schema::{IndexRecordOption, Term};
 /// You can combine other query types and their `Occur`ances into one `BooleanQuery`
 ///
 /// ```rust
-/// use boostcore::collector::Count;
-/// use boostcore::doc;
-/// use boostcore::query::{BooleanQuery, Occur, PhraseQuery, Query, TermQuery};
-/// use boostcore::schema::{IndexRecordOption, Schema, TEXT};
-/// use boostcore::Term;
-/// use boostcore::Index;
-/// use boostcore::IndexWriter;
+/// use velocore::collector::Count;
+/// use velocore::doc;
+/// use velocore::query::{BooleanQuery, Occur, PhraseQuery, Query, TermQuery};
+/// use velocore::schema::{IndexRecordOption, Schema, TEXT};
+/// use velocore::Term;
+/// use velocore::Index;
+/// use velocore::IndexWriter;
 ///
-/// fn main() -> boostcore::Result<()> {
+/// fn main() -> velocore::Result<()> {
 ///    let mut schema_builder = Schema::builder();
 ///    let title = schema_builder.add_text_field("title", TEXT);
 ///    let body = schema_builder.add_text_field("body", TEXT);

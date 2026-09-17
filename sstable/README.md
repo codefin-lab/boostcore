@@ -1,6 +1,6 @@
 # SSTable
 
-The `boostcore-sstable` crate is yet another sstable crate.
+The `velocore-sstable` crate is yet another sstable crate.
 
 It has been designed to be used in `quickwit`:
 - as an alternative to the default tantivy fst dictionary.

@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 
-use boostcore_bitpacker::minmax;
+use velocore_bitpacker::minmax;
 
 use crate::ColumnValues;
 

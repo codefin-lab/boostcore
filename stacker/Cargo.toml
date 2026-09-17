@@ -1,15 +1,15 @@
 [package]
-name = "boostcore-stacker"
+name = "velocore-stacker"
 version = "0.7.0"
 edition = "2024"
 license = "MIT"
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
-description = "term hashmap used for indexing, from BoostCore"
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
+description = "term hashmap used for indexing, from VeloCore"
 
 [dependencies]
 murmurhash32 = "0.3"
-common = { version = "0.11", path = "../common/", package = "boostcore-common" }
+common = { version = "0.11", path = "../common/", package = "velocore-common" }
 ahash = { version = "0.8.11", default-features = false, optional = true }
 
 

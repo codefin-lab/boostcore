@@ -1,7 +1,7 @@
 use std::cmp;
 use std::io::{self, Read, Write};
 
-use boostcore_bitpacker::{compute_num_bits, BitPacker};
+use velocore_bitpacker::{compute_num_bits, BitPacker};
 use byteorder::{ByteOrder, LittleEndian};
 use common::{BinarySerializable, FixedSize};
 
@@ -288,7 +288,7 @@ impl TermInfoStoreWriter {
 #[cfg(test)]
 mod tests {
 
-    use boostcore_bitpacker::{compute_num_bits, BitPacker};
+    use velocore_bitpacker::{compute_num_bits, BitPacker};
     use common::BinarySerializable;
 
     use super::{extract_bits, TermInfoBlockMeta, TermInfoStore, TermInfoStoreWriter};

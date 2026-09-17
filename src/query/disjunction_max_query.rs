@@ -9,15 +9,15 @@ use crate::{Score, Term};
 /// clause, plus a tie breaking increment for any additional matching subqueries.
 ///
 /// ```rust
-/// use boostcore::collector::TopDocs;
-/// use boostcore::doc;
-/// use boostcore::query::{DisjunctionMaxQuery, Query, QueryClone, TermQuery};
-/// use boostcore::schema::{IndexRecordOption, Schema, TEXT};
-/// use boostcore::Term;
-/// use boostcore::Index;
-/// use boostcore::IndexWriter;
+/// use velocore::collector::TopDocs;
+/// use velocore::doc;
+/// use velocore::query::{DisjunctionMaxQuery, Query, QueryClone, TermQuery};
+/// use velocore::schema::{IndexRecordOption, Schema, TEXT};
+/// use velocore::Term;
+/// use velocore::Index;
+/// use velocore::IndexWriter;
 ///
-/// fn main() -> boostcore::Result<()> {
+/// fn main() -> velocore::Result<()> {
 ///    let mut schema_builder = Schema::builder();
 ///    let title = schema_builder.add_text_field("title", TEXT);
 ///    let body = schema_builder.add_text_field("body", TEXT);

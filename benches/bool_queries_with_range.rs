@@ -1,8 +1,8 @@
 use binggan::{black_box, BenchGroup, BenchRunner};
-use boostcore::collector::{Collector, Count, DocSetCollector, TopDocs};
-use boostcore::query::{Query, QueryParser};
-use boostcore::schema::{Schema, FAST, INDEXED, TEXT};
-use boostcore::{doc, Index, Order, ReloadPolicy, Searcher};
+use velocore::collector::{Collector, Count, DocSetCollector, TopDocs};
+use velocore::query::{Query, QueryParser};
+use velocore::schema::{Schema, FAST, INDEXED, TEXT};
+use velocore::{doc, Index, Order, ReloadPolicy, Searcher};
 use rand::prelude::*;
 use rand::rngs::StdRng;
 use rand::SeedableRng;
@@ -266,15 +266,15 @@ impl<C: Collector> SearchTask<C> {
         if let Some(count) = (&result as &dyn std::any::Any).downcast_ref::<usize>() {
             *count
         } else if let Some(top_docs) = (&result as &dyn std::any::Any)
-            .downcast_ref::<Vec<(Option<u64>, boostcore::DocAddress)>>()
+            .downcast_ref::<Vec<(Option<u64>, velocore::DocAddress)>>()
         {
             top_docs.len()
         } else if let Some(top_docs) =
-            (&result as &dyn std::any::Any).downcast_ref::<Vec<(u64, boostcore::DocAddress)>>()
+            (&result as &dyn std::any::Any).downcast_ref::<Vec<(u64, velocore::DocAddress)>>()
         {
             top_docs.len()
         } else if let Some(doc_set) = (&result as &dyn std::any::Any)
-            .downcast_ref::<std::collections::HashSet<boostcore::DocAddress>>()
+            .downcast_ref::<std::collections::HashSet<velocore::DocAddress>>()
         {
             doc_set.len()
         } else {

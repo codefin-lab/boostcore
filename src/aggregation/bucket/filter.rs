@@ -45,11 +45,11 @@ use crate::{DocId, SegmentReader, TantivyError};
 /// # Example
 ///
 /// ```rust
-/// use boostcore::aggregation::bucket::QueryBuilder;
-/// use boostcore::query::{Query, TermQuery};
-/// use boostcore::schema::{Schema, IndexRecordOption};
-/// use boostcore::tokenizer::TokenizerManager;
-/// use boostcore::Term;
+/// use velocore::aggregation::bucket::QueryBuilder;
+/// use velocore::query::{Query, TermQuery};
+/// use velocore::schema::{Schema, IndexRecordOption};
+/// use velocore::tokenizer::TokenizerManager;
+/// use velocore::Term;
 /// use serde::{Serialize, Deserialize};
 ///
 /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -64,7 +64,7 @@ use crate::{DocId, SegmentReader, TantivyError};
 ///         &self,
 ///         schema: &Schema,
 ///         _tokenizers: &TokenizerManager,
-///     ) -> boostcore::Result<Box<dyn Query>> {
+///     ) -> velocore::Result<Box<dyn Query>> {
 ///         let field = schema.get_field(&self.field_name)?;
 ///         let term = Term::from_field_text(field, &self.term_text);
 ///         Ok(Box::new(TermQuery::new(term, IndexRecordOption::Basic)))
@@ -117,7 +117,7 @@ pub trait QueryBuilder: Debug + Send + Sync {
 ///
 /// ## Query String (Recommended)
 /// ```rust
-/// use boostcore::aggregation::bucket::FilterAggregation;
+/// use velocore::aggregation::bucket::FilterAggregation;
 ///
 /// // Query strings are parsed using Tantivy's standard QueryParser
 /// let filter_agg = FilterAggregation::new("category:electronics AND price:[100 TO 500]".to_string());
@@ -125,11 +125,11 @@ pub trait QueryBuilder: Debug + Send + Sync {
 ///
 /// ## Custom Query Builder
 /// ```rust
-/// use boostcore::aggregation::bucket::{FilterAggregation, QueryBuilder};
-/// use boostcore::query::{Query, TermQuery};
-/// use boostcore::schema::{Schema, IndexRecordOption};
-/// use boostcore::tokenizer::TokenizerManager;
-/// use boostcore::Term;
+/// use velocore::aggregation::bucket::{FilterAggregation, QueryBuilder};
+/// use velocore::query::{Query, TermQuery};
+/// use velocore::schema::{Schema, IndexRecordOption};
+/// use velocore::tokenizer::TokenizerManager;
+/// use velocore::Term;
 /// use serde::{Serialize, Deserialize};
 ///
 /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -144,7 +144,7 @@ pub trait QueryBuilder: Debug + Send + Sync {
 ///         &self,
 ///         schema: &Schema,
 ///         _tokenizers: &TokenizerManager,
-///     ) -> boostcore::Result<Box<dyn Query>> {
+///     ) -> velocore::Result<Box<dyn Query>> {
 ///         let field = schema.get_field(&self.field_name)?;
 ///         let term = Term::from_field_text(field, &self.term_text);
 ///         Ok(Box::new(TermQuery::new(term, IndexRecordOption::Basic)))
@@ -229,11 +229,11 @@ impl FilterAggregation {
     ///
     /// # Example
     /// ```rust
-    /// use boostcore::aggregation::bucket::{FilterAggregation, QueryBuilder};
-    /// use boostcore::query::{Query, TermQuery};
-    /// use boostcore::schema::{Schema, IndexRecordOption};
-    /// use boostcore::tokenizer::TokenizerManager;
-    /// use boostcore::Term;
+    /// use velocore::aggregation::bucket::{FilterAggregation, QueryBuilder};
+    /// use velocore::query::{Query, TermQuery};
+    /// use velocore::schema::{Schema, IndexRecordOption};
+    /// use velocore::tokenizer::TokenizerManager;
+    /// use velocore::Term;
     /// use serde::{Serialize, Deserialize};
     ///
     /// #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -248,7 +248,7 @@ impl FilterAggregation {
     ///         &self,
     ///         schema: &Schema,
     ///         _tokenizers: &TokenizerManager,
-    ///     ) -> boostcore::Result<Box<dyn Query>> {
+    ///     ) -> velocore::Result<Box<dyn Query>> {
     ///         let field = schema.get_field(&self.field_name)?;
     ///         let term = Term::from_field_text(field, &self.term_text);
     ///         Ok(Box::new(TermQuery::new(term, IndexRecordOption::Basic)))

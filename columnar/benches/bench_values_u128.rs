@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 use std::sync::Arc;
 
 use binggan::{InputGroup, black_box};
-use boostcore_columnar::ColumnValues;
+use velocore_columnar::ColumnValues;
 use common::OwnedBytes;
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
@@ -25,9 +25,9 @@ fn get_u128_column_random() -> Arc<dyn ColumnValues<u128>> {
 
 fn get_u128_column_from_data(data: &[u128]) -> Arc<dyn ColumnValues<u128>> {
     let mut out = vec![];
-    boostcore_columnar::column_values::serialize_column_values_u128(&data, &mut out).unwrap();
+    velocore_columnar::column_values::serialize_column_values_u128(&data, &mut out).unwrap();
     let out = OwnedBytes::new(out);
-    boostcore_columnar::column_values::open_u128_mapped::<u128>(out).unwrap()
+    velocore_columnar::column_values::open_u128_mapped::<u128>(out).unwrap()
 }
 
 const FIFTY_PERCENT_RANGE: RangeInclusive<u64> = 1..=50;

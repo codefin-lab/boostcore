@@ -11,14 +11,14 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, RwLock};
 
 use binggan::{black_box, BenchRunner};
-use boostcore::directory::error::{DeleteError, OpenReadError, OpenWriteError};
-use boostcore::directory::{
+use velocore::directory::error::{DeleteError, OpenReadError, OpenWriteError};
+use velocore::directory::{
     AntiCallToken, Directory, FileHandle, OwnedBytes, TerminatingWrite, WatchCallback, WatchHandle,
     WritePtr,
 };
-use boostcore::indexer::{merge_filtered_segments, NoMergePolicy};
-use boostcore::schema::{Schema, TEXT};
-use boostcore::{doc, HasLen, Index, IndexSettings, Segment};
+use velocore::indexer::{merge_filtered_segments, NoMergePolicy};
+use velocore::schema::{Schema, TEXT};
+use velocore::{doc, HasLen, Index, IndexSettings, Segment};
 use rand::prelude::*;
 use rand::rngs::StdRng;
 use rand::SeedableRng;
@@ -129,7 +129,7 @@ impl Directory for NullDirectory {
         Ok(())
     }
 
-    fn watch(&self, _watch_callback: WatchCallback) -> boostcore::Result<WatchHandle> {
+    fn watch(&self, _watch_callback: WatchCallback) -> velocore::Result<WatchHandle> {
         Ok(WatchHandle::empty())
     }
 }

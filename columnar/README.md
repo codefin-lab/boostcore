@@ -19,12 +19,12 @@ Users can create a columnar by inserting rows to a `ColumnarWriter`,
 and serializing it into a `Write` object.
 Nothing prevents a user from recording values with different type to the same `column_name`.
 
-In that case, `boostcore-columnar`'s behavior is as follows:
+In that case, `velocore-columnar`'s behavior is as follows:
 - JsonValues are grouped into 3 types (String, Number, bool).
 Values that corresponds to different groups are mapped to different columns. For instance, String values are treated independently
-from Number or boolean values. `boostcore-columnar` will simply emit several columns associated to a given column_name.
+from Number or boolean values. `velocore-columnar` will simply emit several columns associated to a given column_name.
 - Only one column for a given json value type is emitted.  If number values with different number types are recorded (e.g. u64, i64, f64),
-`boostcore-columnar` will pick the first type that can represents the set of appended value, with the following prioriy order (`i64`, `u64`, `f64`).
+`velocore-columnar` will pick the first type that can represents the set of appended value, with the following prioriy order (`i64`, `u64`, `f64`).
 `i64` is picked over `u64` as it is likely to  yield less change of types. Most use cases strictly requiring `u64` show the
 restriction on 50% of the values (e.g. a 64-bit hash). On the other hand, a lot of use cases can show rare negative value.
 

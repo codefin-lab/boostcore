@@ -490,12 +490,12 @@ impl<D: Document> IndexWriter<D> {
     /// by clearing and resubmitting necessary documents
     ///
     /// ```rust
-    /// use boostcore::collector::TopDocs;
-    /// use boostcore::query::QueryParser;
-    /// use boostcore::schema::*;
-    /// use boostcore::{doc, Index};
+    /// use velocore::collector::TopDocs;
+    /// use velocore::query::QueryParser;
+    /// use velocore::schema::*;
+    /// use velocore::{doc, Index};
     ///
-    /// fn main() -> boostcore::Result<()> {
+    /// fn main() -> velocore::Result<()> {
     ///     let mut schema_builder = Schema::builder();
     ///     let title = schema_builder.add_text_field("title", TEXT | STORED);
     ///     let schema = schema_builder.build();

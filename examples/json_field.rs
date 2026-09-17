@@ -4,12 +4,12 @@
 // to make tantivy partially schemaless by setting it as
 // default query parser field.
 
-use boostcore::collector::{Count, TopDocs};
-use boostcore::query::QueryParser;
-use boostcore::schema::{Schema, FAST, STORED, STRING, TEXT};
-use boostcore::{Index, IndexWriter, TantivyDocument};
+use velocore::collector::{Count, TopDocs};
+use velocore::query::QueryParser;
+use velocore::schema::{Schema, FAST, STORED, STRING, TEXT};
+use velocore::{Index, IndexWriter, TantivyDocument};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     let mut schema_builder = Schema::builder();
     schema_builder.add_date_field("timestamp", FAST | STORED);

@@ -5,7 +5,7 @@
 //! each of your fields :
 //!
 //! ```rust
-//! use boostcore::schema::*;
+//! use velocore::schema::*;
 //!
 //! let mut schema_builder = Schema::builder();
 //!
@@ -53,7 +53,7 @@
 //! but is recommended to improve recall.
 //!
 //! # Custom tokenizer Library
-//! Avoid using tantivy as dependency and prefer `boostcore-tokenizer-api` instead.
+//! Avoid using tantivy as dependency and prefer `velocore-tokenizer-api` instead.
 //!
 //! # Custom tokenizers
 //!
@@ -64,7 +64,7 @@
 //! For instance, the `en_stem` is defined as follows.
 //!
 //! ```rust
-//! use boostcore::tokenizer::*;
+//! use velocore::tokenizer::*;
 //!
 //! let en_stem = TextAnalyzer::builder(SimpleTokenizer::default())
 //!     .filter(RemoveLongFilter::limit(40))
@@ -77,9 +77,9 @@
 //! register it with a name in your index's [`TokenizerManager`].
 //!
 //! ```rust
-//! # use boostcore::schema::Schema;
-//! # use boostcore::tokenizer::*;
-//! # use boostcore::Index;
+//! # use velocore::schema::Schema;
+//! # use velocore::tokenizer::*;
+//! # use velocore::Index;
 //! #
 //! let custom_en_tokenizer = SimpleTokenizer::default();
 //! # let schema = Schema::builder().build();
@@ -97,9 +97,9 @@
 //! # Example
 //!
 //! ```rust
-//! use boostcore::schema::{Schema, IndexRecordOption, TextOptions, TextFieldIndexing};
-//! use boostcore::tokenizer::*;
-//! use boostcore::Index;
+//! use velocore::schema::{Schema, IndexRecordOption, TextOptions, TextFieldIndexing};
+//! use velocore::tokenizer::*;
+//! use velocore::Index;
 //!
 //! let mut schema_builder = Schema::builder();
 //! let text_field_indexing = TextFieldIndexing::default()

@@ -6,10 +6,10 @@ use crate::{DocId, Score, SegmentOrdinal, SegmentReader};
 /// documents match the query.
 ///
 /// ```rust
-/// use boostcore::collector::Count;
-/// use boostcore::query::QueryParser;
-/// use boostcore::schema::{Schema, TEXT};
-/// use boostcore::{doc, Index};
+/// use velocore::collector::Count;
+/// use velocore::query::QueryParser;
+/// use velocore::schema::{Schema, TEXT};
+/// use velocore::{doc, Index};
 ///
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);

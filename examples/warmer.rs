@@ -2,11 +2,11 @@ use std::cmp::Reverse;
 use std::collections::{HashMap, HashSet};
 use std::sync::{Arc, RwLock, Weak};
 
-use boostcore::collector::TopDocs;
-use boostcore::index::SegmentId;
-use boostcore::query::QueryParser;
-use boostcore::schema::{Schema, FAST, TEXT};
-use boostcore::{
+use velocore::collector::TopDocs;
+use velocore::index::SegmentId;
+use velocore::query::QueryParser;
+use velocore::schema::{Schema, FAST, TEXT};
+use velocore::{
     doc, DocAddress, DocId, Index, IndexWriter, Opstamp, Searcher, SearcherGeneration,
     SegmentReader, Warmer,
 };
@@ -49,7 +49,7 @@ impl DynamicPriceColumn {
     }
 }
 impl Warmer for DynamicPriceColumn {
-    fn warm(&self, searcher: &Searcher) -> boostcore::Result<()> {
+    fn warm(&self, searcher: &Searcher) -> velocore::Result<()> {
         for segment in searcher.segment_readers() {
             let product_id_reader = segment
                 .fast_fields()
@@ -122,7 +122,7 @@ impl PriceFetcher for ExternalPriceTable {
     }
 }
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Declaring our schema.
     let mut schema_builder = Schema::builder();
     // The product id is assumed to be a primary id for our external price source.

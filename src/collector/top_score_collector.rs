@@ -28,12 +28,12 @@ use crate::{DocAddress, DocId, Order, Score, SegmentReader};
 /// In case of a tie on the sort key, documents are always sorted by ascending `DocAddress`.
 ///
 /// ```rust
-/// use boostcore::collector::TopDocs;
-/// use boostcore::query::QueryParser;
-/// use boostcore::schema::{Schema, TEXT};
-/// use boostcore::{doc, DocAddress, Index};
+/// use velocore::collector::TopDocs;
+/// use velocore::query::QueryParser;
+/// use velocore::schema::{Schema, TEXT};
+/// use velocore::{doc, DocAddress, Index};
 ///
-/// # fn main() -> boostcore::Result<()> {
+/// # fn main() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let schema = schema_builder.build();
@@ -103,12 +103,12 @@ impl TopDocs {
     /// # Example
     ///
     /// ```rust
-    /// use boostcore::collector::TopDocs;
-    /// use boostcore::query::QueryParser;
-    /// use boostcore::schema::{Schema, TEXT};
-    /// use boostcore::{doc, DocAddress, Index};
+    /// use velocore::collector::TopDocs;
+    /// use velocore::query::QueryParser;
+    /// use velocore::schema::{Schema, TEXT};
+    /// use velocore::{doc, DocAddress, Index};
     ///
-    /// # fn main() -> boostcore::Result<()> {
+    /// # fn main() -> velocore::Result<()> {
     /// let mut schema_builder = Schema::builder();
     /// let title = schema_builder.add_text_field("title", TEXT);
     /// let schema = schema_builder.build();
@@ -155,13 +155,13 @@ impl TopDocs {
     /// # Example
     ///
     /// ```rust
-    /// # use boostcore::schema::{Schema, FAST, TEXT};
-    /// # use boostcore::{doc, Index, DocAddress, Order};
-    /// # use boostcore::query::{Query, QueryParser};
-    /// use boostcore::Searcher;
-    /// use boostcore::collector::TopDocs;
+    /// # use velocore::schema::{Schema, FAST, TEXT};
+    /// # use velocore::{doc, Index, DocAddress, Order};
+    /// # use velocore::query::{Query, QueryParser};
+    /// use velocore::Searcher;
+    /// use velocore::collector::TopDocs;
     ///
-    /// # fn main() -> boostcore::Result<()> {
+    /// # fn main() -> velocore::Result<()> {
     /// #   let mut schema_builder = Schema::builder();
     /// #   let title = schema_builder.add_text_field("title", TEXT);
     /// #   let rating = schema_builder.add_u64_field("rating", FAST);
@@ -187,7 +187,7 @@ impl TopDocs {
     /// /// given in argument.
     /// fn docs_sorted_by_rating(searcher: &Searcher,
     ///                          query: &dyn Query)
-    ///     -> boostcore::Result<Vec<(Option<u64>, DocAddress)>> {
+    ///     -> velocore::Result<Vec<(Option<u64>, DocAddress)>> {
     ///
     ///     // This is where we build our topdocs collector
     ///     //
@@ -242,13 +242,13 @@ impl TopDocs {
     /// # Example
     ///
     /// ```rust
-    /// # use boostcore::schema::{Schema, FAST, TEXT};
-    /// # use boostcore::{doc, Index, DocAddress,Order};
-    /// # use boostcore::query::{Query, AllQuery};
-    /// use boostcore::Searcher;
-    /// use boostcore::collector::TopDocs;
+    /// # use velocore::schema::{Schema, FAST, TEXT};
+    /// # use velocore::{doc, Index, DocAddress,Order};
+    /// # use velocore::query::{Query, AllQuery};
+    /// use velocore::Searcher;
+    /// use velocore::collector::TopDocs;
     ///
-    /// # fn main() -> boostcore::Result<()> {
+    /// # fn main() -> velocore::Result<()> {
     /// #   let mut schema_builder = Schema::builder();
     /// #   let title = schema_builder.add_text_field("company", TEXT);
     /// #   let revenue = schema_builder.add_i64_field("revenue", FAST);
@@ -273,7 +273,7 @@ impl TopDocs {
     /// fn docs_sorted_by_revenue(searcher: &Searcher,
     ///                          query: &dyn Query,
     ///                          revenue_field: &str)
-    ///     -> boostcore::Result<Vec<(Option<i64>, DocAddress)>> {
+    ///     -> velocore::Result<Vec<(Option<i64>, DocAddress)>> {
     ///
     ///     // This is where we build our topdocs collector
     ///     //
@@ -355,12 +355,12 @@ impl TopDocs {
     /// learning-to-rank model over various features
     ///
     /// ```rust
-    /// # use boostcore::schema::{Schema, FAST, TEXT};
-    /// # use boostcore::{doc, Index, DocAddress, DocId, Score};
-    /// # use boostcore::query::QueryParser;
-    /// use boostcore::SegmentReader;
-    /// use boostcore::collector::TopDocs;
-    /// use boostcore::schema::Field;
+    /// # use velocore::schema::{Schema, FAST, TEXT};
+    /// # use velocore::{doc, Index, DocAddress, DocId, Score};
+    /// # use velocore::query::QueryParser;
+    /// use velocore::SegmentReader;
+    /// use velocore::collector::TopDocs;
+    /// use velocore::schema::Field;
     ///
     /// fn create_schema() -> Schema {
     ///    let mut schema_builder = Schema::builder();
@@ -369,7 +369,7 @@ impl TopDocs {
     ///    schema_builder.build()
     /// }
     ///
-    /// fn create_index() -> boostcore::Result<Index> {
+    /// fn create_index() -> velocore::Result<Index> {
     ///   let schema = create_schema();
     ///   let index = Index::create_in_ram(schema);
     ///   let mut index_writer = index.writer_with_num_threads(1, 20_000_000)?;

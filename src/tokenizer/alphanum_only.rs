@@ -1,6 +1,6 @@
 //! # Example
 //! ```rust
-//! use boostcore::tokenizer::*;
+//! use velocore::tokenizer::*;
 //!
 //! let mut tokenizer = TextAnalyzer::builder(RawTokenizer::default())
 //!   .filter(AlphaNumOnlyFilter)

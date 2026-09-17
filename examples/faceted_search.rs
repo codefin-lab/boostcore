@@ -14,12 +14,12 @@
 //
 // ---
 // Importing tantivy...
-use boostcore::collector::FacetCollector;
-use boostcore::query::{AllQuery, TermQuery};
-use boostcore::schema::*;
-use boostcore::{doc, Index, IndexWriter};
+use velocore::collector::FacetCollector;
+use velocore::query::{AllQuery, TermQuery};
+use velocore::schema::*;
+use velocore::{doc, Index, IndexWriter};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Let's create a temporary directory for the sake of this example
     let mut schema_builder = Schema::builder();
 

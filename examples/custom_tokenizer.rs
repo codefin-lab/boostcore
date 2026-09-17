@@ -2,13 +2,13 @@
 //
 // In this example, we'll see how to define a tokenizer
 // by creating a custom `NgramTokenizer`.
-use boostcore::collector::TopDocs;
-use boostcore::query::QueryParser;
-use boostcore::schema::*;
-use boostcore::tokenizer::NgramTokenizer;
-use boostcore::{doc, Index, IndexWriter};
+use velocore::collector::TopDocs;
+use velocore::query::QueryParser;
+use velocore::schema::*;
+use velocore::tokenizer::NgramTokenizer;
+use velocore::{doc, Index, IndexWriter};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     //
     // The Tantivy index requires a very strict schema.

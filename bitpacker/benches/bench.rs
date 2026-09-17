@@ -4,7 +4,7 @@ extern crate test;
 
 #[cfg(test)]
 mod tests {
-    use boostcore_bitpacker::{BitPacker, BitUnpacker, BlockedBitpacker};
+    use velocore_bitpacker::{BitPacker, BitUnpacker, BlockedBitpacker};
     use rand::rng;
     use rand::seq::IteratorRandom;
     use test::Bencher;

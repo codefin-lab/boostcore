@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use boostcore_sstable::{Dictionary, MonotonicU64SSTable};
+use velocore_sstable::{Dictionary, MonotonicU64SSTable};
 use common::OwnedBytes;
 use common::file_slice::FileSlice;
 use criterion::{Criterion, criterion_group, criterion_main};

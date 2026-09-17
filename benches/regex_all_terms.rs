@@ -15,10 +15,10 @@
 use std::fmt::Write;
 
 use binggan::{black_box, BenchRunner};
-use boostcore::collector::Count;
-use boostcore::query::RegexQuery;
-use boostcore::schema::{Schema, TEXT};
-use boostcore::{doc, Index, ReloadPolicy};
+use velocore::collector::Count;
+use velocore::query::RegexQuery;
+use velocore::schema::{Schema, TEXT};
+use velocore::{doc, Index, ReloadPolicy};
 
 const HEAP_SIZE_BYTES: usize = 200_000_000;
 
@@ -81,7 +81,7 @@ fn default_configs() -> Vec<BenchConfig> {
     ]
 }
 
-fn build_index(config: BenchConfig, heap_size_bytes: usize) -> (Index, boostcore::schema::Field) {
+fn build_index(config: BenchConfig, heap_size_bytes: usize) -> (Index, velocore::schema::Field) {
     let mut schema_builder = Schema::builder();
     let text_field = schema_builder.add_text_field("text", TEXT);
     let schema = schema_builder.build();

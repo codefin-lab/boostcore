@@ -1,9 +1,9 @@
-use boostcore::schema::*;
+use velocore::schema::*;
 
 // # Document from json
 //
 // For convenience, `Document` can be parsed directly from json.
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Let's first define a schema and an index.
     // Check out the basic example if this is confusing to you.
     //

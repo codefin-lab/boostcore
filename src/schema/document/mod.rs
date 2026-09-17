@@ -37,8 +37,8 @@
 //! ## A basic custom document
 //! ```
 //! use std::collections::{btree_map, BTreeMap};
-//! use boostcore::schema::{Document, Field};
-//! use boostcore::schema::document::{DeserializeError, DocumentDeserialize, DocumentDeserializer};
+//! use velocore::schema::{Document, Field};
+//! use velocore::schema::document::{DeserializeError, DocumentDeserialize, DocumentDeserializer};
 //!
 //! /// Our custom document to let us use a map of `serde_json::Values`.
 //! #[allow(dead_code)]
@@ -112,7 +112,7 @@
 //! on to the [ReferenceValue].
 //!
 //! This is why [Value] is implemented for `&'a serde_json::Value` and
-//! [&'a boostcore::schema::document::OwnedValue](OwnedValue) but not for their owned counterparts, as
+//! [&'a velocore::schema::document::OwnedValue](OwnedValue) but not for their owned counterparts, as
 //! we cannot satisfy the lifetime bounds necessary when indexing the documents.
 //!
 //! ### A note about returning values
@@ -121,9 +121,9 @@
 //! kept in the parent document, and the value passed into Tantivy.
 //!
 //! ```
-//! use boostcore::schema::document::ReferenceValue;
-//! use boostcore::schema::document::ReferenceValueLeaf;
-//! use boostcore::schema::{Value};
+//! use velocore::schema::document::ReferenceValue;
+//! use velocore::schema::document::ReferenceValueLeaf;
+//! use velocore::schema::{Value};
 //!
 //! #[derive(Debug)]
 //! /// Our custom value type which has 3 types, a string, float and bool.

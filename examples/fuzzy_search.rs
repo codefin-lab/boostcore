@@ -11,13 +11,13 @@
 // - retrieve the best document's original content.
 // ---
 // Importing tantivy...
-use boostcore::collector::{Count, TopDocs};
-use boostcore::query::FuzzyTermQuery;
-use boostcore::schema::*;
-use boostcore::{doc, Index, IndexWriter, ReloadPolicy};
+use velocore::collector::{Count, TopDocs};
+use velocore::query::FuzzyTermQuery;
+use velocore::schema::*;
+use velocore::{doc, Index, IndexWriter, ReloadPolicy};
 use tempfile::TempDir;
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Let's create a temporary directory for the
     // sake of this example
     let index_path = TempDir::new()?;

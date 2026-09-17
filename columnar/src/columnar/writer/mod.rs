@@ -36,7 +36,7 @@ struct SpareBuffers {
 /// Makes it possible to create a new columnar.
 ///
 /// ```rust
-/// use boostcore_columnar::ColumnarWriter;
+/// use velocore_columnar::ColumnarWriter;
 ///
 /// let mut columnar_writer = ColumnarWriter::default();
 /// columnar_writer.record_str(0u32 /* doc id */, "product_name", "Red backpack");

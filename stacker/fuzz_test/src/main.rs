@@ -1,7 +1,7 @@
 use ahash::AHashMap;
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use rand_distr::Exp;
-use boostcore_stacker::ArenaHashMap;
+use velocore_stacker::ArenaHashMap;
 
 fn main() {
     for _ in 0..1_000_000 {

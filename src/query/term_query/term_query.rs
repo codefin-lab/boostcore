@@ -19,11 +19,11 @@ use crate::Term;
 /// * `field norm` - number of tokens in the field.
 ///
 /// ```rust
-/// use boostcore::collector::{Count, TopDocs};
-/// use boostcore::query::TermQuery;
-/// use boostcore::schema::{Schema, TEXT, IndexRecordOption};
-/// use boostcore::{doc, Index, IndexWriter, Term};
-/// # fn test() -> boostcore::Result<()> {
+/// use velocore::collector::{Count, TopDocs};
+/// use velocore::query::TermQuery;
+/// use velocore::schema::{Schema, TEXT, IndexRecordOption};
+/// use velocore::{doc, Index, IndexWriter, Term};
+/// # fn test() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let schema = schema_builder.build();

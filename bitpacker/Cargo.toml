@@ -1,15 +1,15 @@
 [package]
-name = "boostcore-bitpacker"
+name = "velocore-bitpacker"
 version = "0.10.0"
 edition = "2024"
 authors = ["Paul Masurel <paul.masurel@gmail.com>"]
 license = "MIT"
 categories = []
-description = """BoostCore sub-crate: bitpacking"""
-repository = "https://github.com/codefin-lab/boostcore"
+description = """VeloCore sub-crate: bitpacking"""
+repository = "https://github.com/codefin-lab/velocore"
 keywords = []
-documentation = "https://docs.rs/boostcore-bitpacker/latest/boostcore_bitpacker"
-homepage = "https://github.com/codefin-lab/boostcore"
+documentation = "https://docs.rs/velocore-bitpacker/latest/velocore_bitpacker"
+homepage = "https://github.com/codefin-lab/velocore"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

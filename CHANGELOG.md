@@ -378,7 +378,7 @@ Tantivy 0.19
   - Expose doc store cache size [#1403](https://github.com/quickwit-oss/tantivy/pull/1403) (@PSeitz)
   - Enable compression levels for doc store [#1378](https://github.com/quickwit-oss/tantivy/pull/1378) (@PSeitz)
   - Make block size configurable [#1374](https://github.com/quickwit-oss/tantivy/pull/1374) (@kryesh)
-- Make `boostcore::TantivyError` cloneable [#1402](https://github.com/quickwit-oss/tantivy/pull/1402) (@PSeitz)
+- Make `velocore::TantivyError` cloneable [#1402](https://github.com/quickwit-oss/tantivy/pull/1402) (@PSeitz)
 - Add support for phrase slop in query language [#1393](https://github.com/quickwit-oss/tantivy/pull/1393) (@saroh)
 - Aggregation
   - Add aggregation support for date type [#1693](https://github.com/quickwit-oss/tantivy/pull/1693)(@PSeitz)
@@ -395,8 +395,8 @@ Tantivy 0.18
 ================================
 
 - For date values `chrono` has been replaced with `time` (@uklotzde) #1304 :
-  - The `time` crate is re-exported as `boostcore::time` instead of `boostcore::chrono`.
-  - The type alias `boostcore::DateTime` has been removed.
+  - The `time` crate is re-exported as `velocore::time` instead of `velocore::chrono`.
+  - The type alias `velocore::DateTime` has been removed.
   - `Value::Date` wraps `time::PrimitiveDateTime` without time zone information.
   - Internally date/time values are stored as seconds since UNIX epoch in UTC.
   - Converting a `time::OffsetDateTime` to `Value::Date` implicitly converts the value into UTC.
@@ -497,7 +497,7 @@ Tantivy 0.14.0
 - Simplified the encoding of the skip reader struct. BlockWAND max tf is now encoded over a single byte. (@fulmicoton)
 - `FilterCollector` now supports all Fast Field value types (@barrotsteindev)
 - FastField are not all loaded when opening the segment reader. (@fulmicoton)
-- Added an API to merge segments, see `boostcore::merge_segments` #1005. (@evanxg852000)
+- Added an API to merge segments, see `velocore::merge_segments` #1005. (@evanxg852000)
 
 This version breaks compatibility and requires users to reindex everything.
 
@@ -597,11 +597,11 @@ Tantivy 0.11.0
 
 ## How to update?
 
-- The index format is changed. You are required to reindex your data to use boostcore 0.11.
+- The index format is changed. You are required to reindex your data to use velocore 0.11.
 - `Box<dyn BoxableTokenizer>` has been replaced by a `BoxedTokenizer` struct.
 - Regex are now compiled when the `RegexQuery` instance is built. As a result, it can now return
 an error and handling the `Result` is required.
-- `boostcore::version()` now returns a `Version` object. This object implements `ToString()`
+- `velocore::version()` now returns a `Version` object. This object implements `ToString()`
 
 Tantivy 0.10.2
 =====================

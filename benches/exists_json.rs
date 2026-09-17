@@ -1,9 +1,9 @@
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, InputGroup, PeakMemAlloc, INSTRUMENTED_SYSTEM};
-use boostcore::collector::Count;
-use boostcore::query::ExistsQuery;
-use boostcore::schema::{Schema, FAST, TEXT};
-use boostcore::{doc, Index};
+use velocore::collector::Count;
+use velocore::query::ExistsQuery;
+use velocore::schema::{Schema, FAST, TEXT};
+use velocore::{doc, Index};
 use serde_json::json;
 
 #[global_allocator]

@@ -1,6 +1,6 @@
 //! # Tantivy-Columnar
 //!
-//! `boostcore-columnar`provides a columnar storage for tantivy.
+//! `velocore-columnar`provides a columnar storage for tantivy.
 //! The crate allows for efficient read operations on specific columns rather than entire records.
 //!
 //! ## Overview

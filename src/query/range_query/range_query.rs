@@ -34,13 +34,13 @@ use crate::{DocId, Score};
 /// # Example
 ///
 /// ```rust
-/// use boostcore::collector::Count;
-/// use boostcore::query::RangeQuery;
-/// use boostcore::Term;
-/// use boostcore::schema::{Schema, INDEXED};
-/// use boostcore::{doc, Index, IndexWriter};
+/// use velocore::collector::Count;
+/// use velocore::query::RangeQuery;
+/// use velocore::Term;
+/// use velocore::schema::{Schema, INDEXED};
+/// use velocore::{doc, Index, IndexWriter};
 /// use std::ops::Bound;
-/// # fn test() -> boostcore::Result<()> {
+/// # fn test() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let year_field = schema_builder.add_u64_field("year", INDEXED);
 /// let schema = schema_builder.build();

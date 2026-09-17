@@ -1,6 +1,6 @@
 //! # Example
 //! ```rust
-//! use boostcore::tokenizer::*;
+//! use velocore::tokenizer::*;
 //!
 //! let mut tokenizer = TextAnalyzer::builder(SimpleTokenizer::default())
 //!   .filter(StopWordFilter::remove(vec!["the".to_string(), "is".to_string()]))

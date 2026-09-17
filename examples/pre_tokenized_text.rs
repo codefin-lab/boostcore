@@ -5,15 +5,15 @@
 // tokens by some external tool.
 //
 // In this example we will:
-// - use boostcore tokenizer to create tokens and load them directly into tantivy,
+// - use velocore tokenizer to create tokens and load them directly into tantivy,
 // - import tokenized text straight from json,
 // - perform a search on documents with pre-tokenized text
 
-use boostcore::collector::{Count, TopDocs};
-use boostcore::query::TermQuery;
-use boostcore::schema::*;
-use boostcore::tokenizer::{PreTokenizedString, SimpleTokenizer, Token, TokenStream, Tokenizer};
-use boostcore::{doc, Index, IndexWriter, ReloadPolicy};
+use velocore::collector::{Count, TopDocs};
+use velocore::query::TermQuery;
+use velocore::schema::*;
+use velocore::tokenizer::{PreTokenizedString, SimpleTokenizer, Token, TokenStream, Tokenizer};
+use velocore::{doc, Index, IndexWriter, ReloadPolicy};
 use tempfile::TempDir;
 
 fn pre_tokenize_text(text: &str) -> Vec<Token> {
@@ -26,7 +26,7 @@ fn pre_tokenize_text(text: &str) -> Vec<Token> {
     tokens
 }
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     let index_path = TempDir::new()?;
 
     let mut schema_builder = Schema::builder();

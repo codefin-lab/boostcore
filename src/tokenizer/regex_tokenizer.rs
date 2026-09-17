@@ -21,7 +21,7 @@ use crate::TantivyError;
 /// # Example
 ///
 /// ```rust
-/// use boostcore::tokenizer::*;
+/// use velocore::tokenizer::*;
 ///
 /// let mut tokenizer = RegexTokenizer::new(r"'(?:\w*)'").unwrap();
 /// let mut stream = tokenizer.token_stream("'aaa' bbb 'ccc' 'ddd'");

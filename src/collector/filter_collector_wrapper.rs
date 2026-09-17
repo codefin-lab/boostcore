@@ -26,12 +26,12 @@ use crate::{DocId, Score, SegmentReader};
 ///
 ///
 /// ```rust
-/// use boostcore::collector::{TopDocs, FilterCollector};
-/// use boostcore::query::QueryParser;
-/// use boostcore::schema::{Schema, TEXT, FAST};
-/// use boostcore::{doc, DocAddress, Index};
+/// use velocore::collector::{TopDocs, FilterCollector};
+/// use velocore::query::QueryParser;
+/// use velocore::schema::{Schema, TEXT, FAST};
+/// use velocore::{doc, DocAddress, Index};
 ///
-/// # fn main() -> boostcore::Result<()> {
+/// # fn main() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let price = schema_builder.add_u64_field("price", FAST);
@@ -216,12 +216,12 @@ where
 /// - documents with several values are accepted if at least one value matches the predicate.
 ///
 /// ```rust
-/// use boostcore::collector::{TopDocs, BytesFilterCollector};
-/// use boostcore::query::QueryParser;
-/// use boostcore::schema::{Schema, TEXT, FAST};
-/// use boostcore::{doc, DocAddress, Index};
+/// use velocore::collector::{TopDocs, BytesFilterCollector};
+/// use velocore::query::QueryParser;
+/// use velocore::schema::{Schema, TEXT, FAST};
+/// use velocore::{doc, DocAddress, Index};
 ///
-/// # fn main() -> boostcore::Result<()> {
+/// # fn main() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let barcode = schema_builder.add_bytes_field("barcode", FAST);

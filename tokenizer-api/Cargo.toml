@@ -1,11 +1,11 @@
 [package]
-name = "boostcore-tokenizer-api"
+name = "velocore-tokenizer-api"
 version = "0.7.0"
 license = "MIT"
 edition = "2021"
-description = "Tokenizer API of BoostCore, a fork of tantivy"
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
+description = "Tokenizer API of VeloCore, a fork of tantivy"
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

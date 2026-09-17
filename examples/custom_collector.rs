@@ -10,11 +10,11 @@
 use columnar::Column;
 // ---
 // Importing tantivy...
-use boostcore::collector::{Collector, SegmentCollector};
-use boostcore::index::SegmentReader;
-use boostcore::query::QueryParser;
-use boostcore::schema::{Schema, FAST, INDEXED, TEXT};
-use boostcore::{doc, Index, IndexWriter, Score};
+use velocore::collector::{Collector, SegmentCollector};
+use velocore::index::SegmentReader;
+use velocore::query::QueryParser;
+use velocore::schema::{Schema, FAST, INDEXED, TEXT};
+use velocore::{doc, Index, IndexWriter, Score};
 
 #[derive(Default)]
 struct Stats {
@@ -71,7 +71,7 @@ impl Collector for StatsCollector {
         &self,
         _segment_local_id: u32,
         segment_reader: &SegmentReader,
-    ) -> boostcore::Result<StatsSegmentCollector> {
+    ) -> velocore::Result<StatsSegmentCollector> {
         let fast_field_reader = segment_reader.fast_fields().u64(&self.field)?;
         Ok(StatsSegmentCollector {
             fast_field_reader,
@@ -84,7 +84,7 @@ impl Collector for StatsCollector {
         false
     }
 
-    fn merge_fruits(&self, segment_stats: Vec<Option<Stats>>) -> boostcore::Result<Option<Stats>> {
+    fn merge_fruits(&self, segment_stats: Vec<Option<Stats>>) -> velocore::Result<Option<Stats>> {
         let mut stats = Stats::default();
         for segment_stats in segment_stats.into_iter().flatten() {
             stats.count += segment_stats.count;
@@ -119,7 +119,7 @@ impl SegmentCollector for StatsSegmentCollector {
     }
 }
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     //
     // The Tantivy index requires a very strict schema.

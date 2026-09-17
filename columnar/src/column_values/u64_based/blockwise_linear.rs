@@ -2,7 +2,7 @@ use std::io::Write;
 use std::sync::Arc;
 use std::{io, iter};
 
-use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
+use velocore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 use common::{BinarySerializable, CountingWriter, DeserializeFrom, OwnedBytes};
 use fastdivide::DividerU64;
 

@@ -1,11 +1,11 @@
-# BoostCore
+# VeloCore
 
-BoostCore is the search engine library [BoostSearch](https://github.com/codefin-lab/boostsearch)
+VeloCore is the search engine library [BoostSearch](https://github.com/codefin-lab/boostsearch)
 is built on. It is a fork of [tantivy](https://github.com/quickwit-oss/tantivy)
 **0.26.1**, kept as a fork so the parts of the engine an OpenSearch-compatible
 server leans on can be fixed rather than worked around.
 
-Everything tantivy does, BoostCore does. What follows is only what differs.
+Everything tantivy does, VeloCore does. What follows is only what differs.
 
 ## What the fork changes
 
@@ -17,7 +17,7 @@ document as the same length and scores by term frequency alone — a long
 address that repeats a word beats a short one that says it once, which is the
 opposite of what Lucene does.
 
-BoostCore records a norm per JSON **path**, which is what a field would be in a
+VeloCore records a norm per JSON **path**, which is what a field would be in a
 flat schema:
 
 - `src/schema/field_type.rs` — `has_fieldnorms()` answers what the JSON field's
@@ -49,5 +49,5 @@ the changes above.
 
 There is no upstream remote: the fork is a snapshot of tag `0.26.1`. To move to
 a newer tantivy, clone it at the new tag, redo the rename (`tantivy` →
-`boostcore` and each workspace member), and re-apply the changes above — each
+`velocore` and each workspace member), and re-apply the changes above — each
 is a few lines and carries a comment saying why it is there.

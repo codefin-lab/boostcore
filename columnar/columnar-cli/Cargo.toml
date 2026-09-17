@@ -1,11 +1,11 @@
 [package]
-name = "boostcore-columnar-cli"
+name = "velocore-columnar-cli"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
 
 [dependencies]
-columnar = {path="../", package="boostcore-columnar"}
+columnar = {path="../", package="velocore-columnar"}
 serde_json = "1"
 serde_json_borrow = {git="https://github.com/PSeitz/serde_json_borrow/"}
 

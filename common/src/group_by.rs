@@ -10,7 +10,7 @@ pub trait GroupByIteratorExtended: Iterator {
     /// group.
     ///
     /// ```
-    /// use boostcore_common::GroupByIteratorExtended;
+    /// use velocore_common::GroupByIteratorExtended;
     ///
     /// // group data into blocks of larger than zero or not.
     /// let data: Vec<i32> = vec![1, 3, -2, -2, 1, 0, 1, 2];

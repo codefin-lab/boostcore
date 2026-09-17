@@ -1,12 +1,12 @@
 [package]
-name = "boostcore-query-grammar"
+name = "velocore-query-grammar"
 version = "0.26.0"
 authors = ["Paul Masurel <paul.masurel@gmail.com>"]
 license = "MIT"
 categories = ["database-implementations", "data-structures"]
-description = """Query grammar of BoostCore, a fork of tantivy"""
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
+description = """Query grammar of VeloCore, a fork of tantivy"""
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
 readme = "README.md"
 keywords = ["search", "information", "retrieval"]
 edition = "2024"

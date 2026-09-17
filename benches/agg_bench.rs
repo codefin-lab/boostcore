@@ -1,10 +1,10 @@
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, InputGroup, PeakMemAlloc, INSTRUMENTED_SYSTEM};
-use boostcore::aggregation::agg_req::Aggregations;
-use boostcore::aggregation::AggregationCollector;
-use boostcore::query::{AllQuery, TermQuery};
-use boostcore::schema::{IndexRecordOption, Schema, TextFieldIndexing, FAST, STRING};
-use boostcore::{doc, DateTime, Index, Term};
+use velocore::aggregation::agg_req::Aggregations;
+use velocore::aggregation::AggregationCollector;
+use velocore::query::{AllQuery, TermQuery};
+use velocore::schema::{IndexRecordOption, Schema, TextFieldIndexing, FAST, STRING};
+use velocore::{doc, DateTime, Index, Term};
 use rand::distr::weighted::WeightedIndex;
 use rand::rngs::StdRng;
 use rand::seq::IndexedRandom;
@@ -552,7 +552,7 @@ fn get_collector(agg_req: Aggregations) -> AggregationCollector {
     AggregationCollector::from_aggs(agg_req, Default::default())
 }
 
-fn get_test_index_bench(cardinality: Cardinality) -> boostcore::Result<Index> {
+fn get_test_index_bench(cardinality: Cardinality) -> velocore::Result<Index> {
     // Flag to use existing index
     let reuse_index = std::env::var("REUSE_AGG_BENCH_INDEX").is_ok();
     if reuse_index && std::path::Path::new("agg_bench").exists() {
@@ -561,7 +561,7 @@ fn get_test_index_bench(cardinality: Cardinality) -> boostcore::Result<Index> {
     // crreate dir
     std::fs::create_dir_all("agg_bench")?;
     let mut schema_builder = Schema::builder();
-    let text_fieldtype = boostcore::schema::TextOptions::default()
+    let text_fieldtype = velocore::schema::TextOptions::default()
         .set_indexing_options(
             TextFieldIndexing::default().set_index_option(IndexRecordOption::WithFreqs),
         )
@@ -576,7 +576,7 @@ fn get_test_index_bench(cardinality: Cardinality) -> boostcore::Result<Index> {
         schema_builder.add_text_field("text_few_terms_status", STRING | FAST);
     let text_field_1000_terms_zipf =
         schema_builder.add_text_field("text_1000_terms_zipf", STRING | FAST);
-    let score_fieldtype = boostcore::schema::NumericOptions::default().set_fast();
+    let score_fieldtype = velocore::schema::NumericOptions::default().set_fast();
     let score_field = schema_builder.add_u64_field("score", score_fieldtype.clone());
     let score_field_f64 = schema_builder.add_f64_field("score_f64", score_fieldtype.clone());
     let score_field_i64 = schema_builder.add_i64_field("score_i64", score_fieldtype);

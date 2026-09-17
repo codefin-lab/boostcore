@@ -12,13 +12,13 @@
 
 // ---
 // Importing tantivy...
-use boostcore::collector::TopDocs;
-use boostcore::query::QueryParser;
-use boostcore::schema::*;
-use boostcore::{doc, Index, IndexWriter, ReloadPolicy};
+use velocore::collector::TopDocs;
+use velocore::query::QueryParser;
+use velocore::schema::*;
+use velocore::{doc, Index, IndexWriter, ReloadPolicy};
 use tempfile::TempDir;
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Let's create a temporary directory for the
     // sake of this example
     let index_path = TempDir::new()?;

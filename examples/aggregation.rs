@@ -6,15 +6,15 @@
 // - Term aggregation and compute the min price in each bucket
 // ---
 
-use boostcore::aggregation::agg_req::Aggregations;
-use boostcore::aggregation::agg_result::AggregationResults;
-use boostcore::aggregation::AggregationCollector;
-use boostcore::query::AllQuery;
-use boostcore::schema::{self, IndexRecordOption, Schema, TextFieldIndexing, FAST};
-use boostcore::{Index, IndexWriter, TantivyDocument};
+use velocore::aggregation::agg_req::Aggregations;
+use velocore::aggregation::agg_result::AggregationResults;
+use velocore::aggregation::AggregationCollector;
+use velocore::query::AllQuery;
+use velocore::schema::{self, IndexRecordOption, Schema, TextFieldIndexing, FAST};
+use velocore::{Index, IndexWriter, TantivyDocument};
 use serde_json::{Deserializer, Value};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Create Schema
     //
     // Lets create a schema for a footwear shop, with 4 fields: name, category, stock and price.

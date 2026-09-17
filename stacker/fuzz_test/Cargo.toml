@@ -9,7 +9,7 @@ edition = "2021"
 ahash = "0.8.7"
 rand = "0.9"
 rand_distr = "0.5"
-boostcore-stacker = { version = "0.2.0", path = ".." }
+velocore-stacker = { version = "0.2.0", path = ".." }
 
 [workspace]
 

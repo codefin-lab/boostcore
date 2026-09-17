@@ -73,12 +73,12 @@ fn facet_depth(facet_bytes: &[u8]) -> usize {
 ///
 ///
 /// ```rust
-/// use boostcore::collector::FacetCollector;
-/// use boostcore::query::AllQuery;
-/// use boostcore::schema::{Facet, Schema, FacetOptions, TEXT};
-/// use boostcore::{doc, Index};
+/// use velocore::collector::FacetCollector;
+/// use velocore::query::AllQuery;
+/// use velocore::schema::{Facet, Schema, FacetOptions, TEXT};
+/// use velocore::{doc, Index};
 ///
-/// fn example() -> boostcore::Result<()> {
+/// fn example() -> velocore::Result<()> {
 ///     let mut schema_builder = Schema::builder();
 ///
 ///     // Facet have their own specific type.

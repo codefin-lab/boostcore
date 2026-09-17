@@ -14,7 +14,7 @@ But tantivy's scope does not stop there. Numerous features are required to power
 - compute the count of documents matching a query in the different section of an e-commerce website,
 - display an average price per meter square for a real estate search engine,
 - take into account historical user data to rank documents in a specific way,
-- or even use boostcore to power an OLAP database.
+- or even use velocore to power an OLAP database.
 
 A more abstract description of the problem space tantivy is trying to address is the following.
 

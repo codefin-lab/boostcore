@@ -1,5 +1,5 @@
 use binggan::{BenchRunner, black_box};
-use boostcore_common::{BitSet, TinySet, serialize_vint_u32};
+use velocore_common::{BitSet, TinySet, serialize_vint_u32};
 use rand::rng;
 use rand::seq::IteratorRandom;
 

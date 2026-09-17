@@ -1,4 +1,4 @@
-use boostcore_stacker::ArenaHashMap;
+use velocore_stacker::ArenaHashMap;
 
 const ALICE: &str = include_str!("../../benches/alice.txt");
 

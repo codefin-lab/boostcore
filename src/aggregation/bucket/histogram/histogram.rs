@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use boostcore_bitpacker::minmax;
+use velocore_bitpacker::minmax;
 use columnar::{Column, ColumnType};
 use rustc_hash::FxHashMap;
 use serde::{Deserialize, Serialize};

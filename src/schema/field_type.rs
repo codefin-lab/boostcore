@@ -63,7 +63,7 @@ pub enum Type {
     Bool = b'o',
     /// `date(i64) timestamp`
     Date = b'd',
-    /// `boostcore::schema::Facet`. Passed as a string in JSON.
+    /// `velocore::schema::Facet`. Passed as a string in JSON.
     Facet = b'h',
     /// `Vec<u8>`
     Bytes = b'b',

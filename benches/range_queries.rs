@@ -1,10 +1,10 @@
 use std::ops::Bound;
 
 use binggan::{black_box, BenchGroup, BenchRunner};
-use boostcore::collector::{Count, DocSetCollector, TopDocs};
-use boostcore::query::RangeQuery;
-use boostcore::schema::{Schema, FAST, INDEXED};
-use boostcore::{doc, Index, Order, ReloadPolicy, Searcher, Term};
+use velocore::collector::{Count, DocSetCollector, TopDocs};
+use velocore::query::RangeQuery;
+use velocore::schema::{Schema, FAST, INDEXED};
+use velocore::{doc, Index, Order, ReloadPolicy, Searcher, Term};
 use rand::prelude::*;
 use rand::rngs::StdRng;
 use rand::SeedableRng;
@@ -339,7 +339,7 @@ impl Top100AscSearchTask {
             TopDocs::with_limit(100).order_by_fast_field::<u64>(&self.field_name, Order::Asc);
         let result = self.searcher.search(&self.query, &collector).unwrap();
         for (_score, doc_address) in &result {
-            let _doc: boostcore::TantivyDocument = self.searcher.doc(*doc_address).unwrap();
+            let _doc: velocore::TantivyDocument = self.searcher.doc(*doc_address).unwrap();
         }
         result.len()
     }
@@ -358,7 +358,7 @@ impl Top100DescSearchTask {
             TopDocs::with_limit(100).order_by_fast_field::<u64>(&self.field_name, Order::Desc);
         let result = self.searcher.search(&self.query, &collector).unwrap();
         for (_score, doc_address) in &result {
-            let _doc: boostcore::TantivyDocument = self.searcher.doc(*doc_address).unwrap();
+            let _doc: velocore::TantivyDocument = self.searcher.doc(*doc_address).unwrap();
         }
         result.len()
     }

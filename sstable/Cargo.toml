@@ -1,19 +1,19 @@
 [package]
-name = "boostcore-sstable"
+name = "velocore-sstable"
 version = "0.7.0"
 edition = "2024"
 license = "MIT"
-homepage = "https://github.com/codefin-lab/boostcore"
-repository = "https://github.com/codefin-lab/boostcore"
+homepage = "https://github.com/codefin-lab/velocore"
+repository = "https://github.com/codefin-lab/velocore"
 keywords = ["search", "information", "retrieval", "sstable"]
 categories = ["database-implementations", "data-structures", "compression"]
-description = "sstables for BoostCore, a fork of tantivy"
+description = "sstables for VeloCore, a fork of tantivy"
 
 [dependencies]
-common = {version= "0.11", path="../common", package="boostcore-common"}
+common = {version= "0.11", path="../common", package="velocore-common"}
 futures-util = "0.3.30"
 itertools = "0.14.0"
-boostcore-bitpacker = { version= "0.10", path="../bitpacker" }
+velocore-bitpacker = { version= "0.10", path="../bitpacker" }
 tantivy-fst = "0.5"
 # experimental gives us access to Decompressor::upper_bound
 zstd = { version = "0.13", optional = true, features = ["experimental"] }

@@ -18,7 +18,7 @@ use super::{Token, TokenFilter, TokenStream, Tokenizer};
 /// is not split in the following example.
 ///
 /// ```rust
-/// use boostcore::tokenizer::{SimpleTokenizer, SplitCompoundWords, TextAnalyzer};
+/// use velocore::tokenizer::{SimpleTokenizer, SplitCompoundWords, TextAnalyzer};
 ///
 /// let mut tokenizer =
 ///        TextAnalyzer::builder(SimpleTokenizer::default())

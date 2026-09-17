@@ -1,4 +1,4 @@
-use boostcore::tokenizer::{
+use velocore::tokenizer::{
     LowerCaser, RemoveLongFilter, SimpleTokenizer, TextAnalyzer, TokenizerManager,
 };
 use criterion::{criterion_group, criterion_main, Criterion};

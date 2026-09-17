@@ -12,12 +12,12 @@
 //! ## Example
 //!
 //! ```rust
-//! # use boostcore::query::QueryParser;
-//! # use boostcore::schema::{Schema, TEXT};
-//! # use boostcore::{doc, Index};
-//! use boostcore::snippet::SnippetGenerator;
+//! # use velocore::query::QueryParser;
+//! # use velocore::schema::{Schema, TEXT};
+//! # use velocore::{doc, Index};
+//! use velocore::snippet::SnippetGenerator;
 //!
-//! # fn main() -> boostcore::Result<()> {
+//! # fn main() -> velocore::Result<()> {
 //! #    let mut schema_builder = Schema::builder();
 //! #    let text_field = schema_builder.add_text_field("text", TEXT);
 //! #    let schema = schema_builder.build();
@@ -338,12 +338,12 @@ fn is_sorted(mut it: impl Iterator<Item = usize>) -> bool {
 /// # Example
 ///
 /// ```rust
-/// # use boostcore::query::QueryParser;
-/// # use boostcore::schema::{Schema, TEXT};
-/// # use boostcore::{doc, Index};
-/// use boostcore::snippet::SnippetGenerator;
+/// # use velocore::query::QueryParser;
+/// # use velocore::schema::{Schema, TEXT};
+/// # use velocore::{doc, Index};
+/// use velocore::snippet::SnippetGenerator;
 ///
-/// # fn main() -> boostcore::Result<()> {
+/// # fn main() -> velocore::Result<()> {
 /// #    let mut schema_builder = Schema::builder();
 /// #    let text_field = schema_builder.add_text_field("text", TEXT);
 /// #    let schema = schema_builder.build();

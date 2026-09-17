@@ -1,6 +1,6 @@
 //! # Example
 //! ```rust
-//! use boostcore::tokenizer::*;
+//! use velocore::tokenizer::*;
 //!
 //! let mut tokenizer = TextAnalyzer::builder(SimpleTokenizer::default())
 //!   .filter(RemoveLongFilter::limit(5))

@@ -1,4 +1,4 @@
-use boostcore_sstable::{Dictionary, MonotonicU64SSTable, VecU32ValueSSTable};
+use velocore_sstable::{Dictionary, MonotonicU64SSTable, VecU32ValueSSTable};
 use common::OwnedBytes;
 
 #[test]

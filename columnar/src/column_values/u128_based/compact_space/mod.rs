@@ -20,7 +20,7 @@ use std::{
 mod blank_range;
 mod build_compact_space;
 
-use boostcore_bitpacker::{BitPacker, BitUnpacker};
+use velocore_bitpacker::{BitPacker, BitUnpacker};
 use build_compact_space::get_compact_space;
 use common::{BinarySerializable, CountingWriter, OwnedBytes, VInt, VIntU128};
 
@@ -196,7 +196,7 @@ impl CompactSpaceCompressor {
             "case unsupported."
         );
 
-        let num_bits = boostcore_bitpacker::compute_num_bits(amplitude_compact_space as u64);
+        let num_bits = velocore_bitpacker::compute_num_bits(amplitude_compact_space as u64);
 
         assert_eq!(
             compact_space

@@ -23,8 +23,8 @@
 /// # Example
 ///
 /// ```rust
-/// use boostcore::schema::{Schema, TEXT, FAST};
-/// use boostcore::doc;
+/// use velocore::schema::{Schema, TEXT, FAST};
+/// use velocore::doc;
 ///
 /// //...
 ///

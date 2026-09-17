@@ -11,13 +11,13 @@
 
 // ---
 // Importing tantivy...
-use boostcore::collector::TopDocs;
-use boostcore::query::QueryParser;
-use boostcore::schema::*;
-use boostcore::tokenizer::*;
-use boostcore::{doc, Index, IndexWriter};
+use velocore::collector::TopDocs;
+use velocore::query::QueryParser;
+use velocore::schema::*;
+use velocore::tokenizer::*;
+use velocore::{doc, Index, IndexWriter};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // this example assumes you understand the content in `basic_search`
     let mut schema_builder = Schema::builder();
 

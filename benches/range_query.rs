@@ -4,10 +4,10 @@ use std::ops::RangeInclusive;
 
 use binggan::plugins::PeakMemAllocPlugin;
 use binggan::{black_box, BenchRunner, OutputValue, PeakMemAlloc, INSTRUMENTED_SYSTEM};
-use boostcore::collector::{Count, TopDocs};
-use boostcore::query::QueryParser;
-use boostcore::schema::*;
-use boostcore::{doc, Index};
+use velocore::collector::{Count, TopDocs};
+use velocore::query::QueryParser;
+use velocore::schema::*;
+use velocore::{doc, Index};
 use columnar::MonotonicallyMappableToU128;
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};

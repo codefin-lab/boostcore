@@ -15,12 +15,12 @@ use crate::schema::Field;
 /// by converting them to their regex counterparts.
 ///
 /// ```rust
-/// use boostcore::collector::Count;
-/// use boostcore::query::RegexQuery;
-/// use boostcore::schema::{Schema, TEXT};
-/// use boostcore::{doc, Index, IndexWriter, Term};
+/// use velocore::collector::Count;
+/// use velocore::query::RegexQuery;
+/// use velocore::schema::{Schema, TEXT};
+/// use velocore::{doc, Index, IndexWriter, Term};
 ///
-/// # fn test() -> boostcore::Result<()> {
+/// # fn test() -> velocore::Result<()> {
 /// let mut schema_builder = Schema::builder();
 /// let title = schema_builder.add_text_field("title", TEXT);
 /// let schema = schema_builder.build();

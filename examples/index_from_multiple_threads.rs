@@ -29,10 +29,10 @@ use std::sync::{Arc, RwLock};
 use std::thread;
 use std::time::Duration;
 
-use boostcore::schema::{Schema, STORED, TEXT};
-use boostcore::{doc, Index, IndexWriter, Opstamp, TantivyError};
+use velocore::schema::{Schema, STORED, TEXT};
+use velocore::{doc, Index, IndexWriter, Opstamp, TantivyError};
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // # Defining the schema
     let mut schema_builder = Schema::builder();
     let title = schema_builder.add_text_field("title", TEXT | STORED);

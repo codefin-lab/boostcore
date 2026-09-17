@@ -1,9 +1,9 @@
-extern crate boostcore_columnar;
+extern crate velocore_columnar;
 
 use core::fmt;
 use std::fmt::{Display, Formatter};
 
-use boostcore_columnar::{ColumnarReader, ColumnarWriter};
+use velocore_columnar::{ColumnarReader, ColumnarWriter};
 
 pub enum Card {
     MultiSparse,

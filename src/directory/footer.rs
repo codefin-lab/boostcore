@@ -73,7 +73,7 @@ impl Footer {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidData,
                 "Footer magic byte mismatch. File corrupted or index was created using old an \
-                 tantivy version which is not supported anymore. Please use boostcore 0.15 or above \
+                 tantivy version which is not supported anymore. Please use velocore 0.15 or above \
                  to recreate the index.",
             ));
         }
@@ -198,7 +198,7 @@ mod tests {
         assert_eq!(
             err.to_string(),
             "Footer magic byte mismatch. File corrupted or index was created using old an tantivy \
-             version which is not supported anymore. Please use boostcore 0.15 or above to recreate \
+             version which is not supported anymore. Please use velocore 0.15 or above to recreate \
              the index."
         );
     }

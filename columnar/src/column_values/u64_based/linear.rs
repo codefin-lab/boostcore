@@ -1,6 +1,6 @@
 use std::io;
 
-use boostcore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
+use velocore_bitpacker::{BitPacker, BitUnpacker, compute_num_bits};
 use common::{BinarySerializable, OwnedBytes};
 
 use super::ColumnValues;

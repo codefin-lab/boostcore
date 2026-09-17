@@ -7,14 +7,14 @@
 // your data in a single query, like "average price overall + average price for
 // electronics + count of in-stock items".
 
-use boostcore::aggregation::agg_req::Aggregations;
-use boostcore::aggregation::AggregationCollector;
-use boostcore::query::AllQuery;
-use boostcore::schema::{Schema, FAST, INDEXED, TEXT};
-use boostcore::{doc, Index};
+use velocore::aggregation::agg_req::Aggregations;
+use velocore::aggregation::AggregationCollector;
+use velocore::query::AllQuery;
+use velocore::schema::{Schema, FAST, INDEXED, TEXT};
+use velocore::{doc, Index};
 use serde_json::json;
 
-fn main() -> boostcore::Result<()> {
+fn main() -> velocore::Result<()> {
     // Create a simple product schema
     let mut schema_builder = Schema::builder();
     schema_builder.add_text_field("category", TEXT | FAST);

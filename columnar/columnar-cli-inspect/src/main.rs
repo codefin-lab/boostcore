@@ -2,7 +2,7 @@ use columnar::ColumnarReader;
 use common::file_slice::{FileSlice, WrapFile};
 use std::io;
 use std::path::Path;
-use boostcore::directory::footer::Footer;
+use velocore::directory::footer::Footer;
 
 fn main() -> io::Result<()> {
     println!("Opens a columnar file written by tantivy and validates it.");

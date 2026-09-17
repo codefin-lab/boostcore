@@ -1,5 +1,5 @@
 use binggan::{InputGroup, black_box};
-use boostcore_columnar::column_values::{CodecType, serialize_u64_based_column_values};
+use velocore_columnar::column_values::{CodecType, serialize_u64_based_column_values};
 use rand::rngs::StdRng;
 use rand::{Rng, SeedableRng};
 
